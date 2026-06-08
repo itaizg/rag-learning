@@ -1,0 +1,33 @@
+HELIOS ROBOTICS — FREQUENTLY ASKED QUESTIONS
+Document: Software & Controller FAQ
+Last Updated: 2024-10-15
+
+Q: What version of HeliosMaster is required for the HeliosArm V2?
+A: HeliosMaster v5.2 or higher is required for full HeliosArm V2 feature support (including torque-sensor safety features and 7-DOF planning in HeliosSim). Version 5.0 and 5.1 will operate V2 in basic mode only.
+
+Q: Can I program the HC-400 from my laptop?
+A: Yes. Use HeliosSim on Windows or Linux for offline programming. Transfer programs to the HC-400 via USB key or network (SMB share). HeliosSim requires a licence file (request from licensing@helios-robotics.com).
+
+Q: What programming languages does HeliosMaster support?
+A: HeliosMaster supports three modes: visual block programming (drag-and-drop), IEC 61131-3 Structured Text, and Ladder Logic. For ROS 2 users, the hr_ros2_bridge provides a standard MoveIt 2 interface.
+
+Q: How do I back up HC-400 controller programs?
+A: In HeliosMaster: File → Backup → Export to USB or File → Backup → Network Share. Backups include programs, calibration data, safety zone configuration, and I/O assignments. Schedule automatic backups in Setup → Maintenance → Auto-Backup.
+
+Q: My HeliosFleet dashboard shows incorrect battery percentage for some HeliosBase M1 units.
+A: This is a known issue (INC-2024-019) in units with >450 charge cycles running firmware <FW-M1-1.5.1. Update to FW-M1-1.5.1 and run a calibration cycle via HeliosFleet → Unit → Battery → Run Calibration Cycle.
+
+Q: How do I update firmware on the HC-400?
+A: Download firmware from the Helios customer portal (portal.helios-robotics.com). Place the .hfw file on a USB key, insert into HC-400, and in HeliosMaster go to Setup → System → Firmware Update. Always back up the controller before updating.
+
+Q: Does the HC-400 support PROFINET?
+A: Not in the base configuration. Add the HR-NET-PFN PROFINET expansion module (plug into the controller's expansion slot) and install the corresponding HeliosMaster PROFINET licence.
+
+Q: What is the HeliosFleet API?
+A: HeliosFleet v2.x provides a REST + WebSocket API for fleet management. Documentation at docs.helios-robotics.com/fleetapi. Authentication uses OAuth 2.0 (client credentials). The v3.0 API (in development under PROJ-FLEET-AI) adds AI-assisted route planning endpoints.
+
+Q: Who maintains the ROS 2 bridge?
+A: Tomás Reyes (Software team) is the primary maintainer of hr_ros2_bridge. Issues and PRs welcome on GitHub. The package supports ROS 2 Humble and Iron.
+
+Q: What is HeliosSim?
+A: HeliosSim is Helios Robotics' offline simulation and programming tool. It includes accurate physics simulation for collision detection and cycle time estimation. Available on Windows 10/11 and Ubuntu 22.04. Contact licensing@helios-robotics.com for evaluation licences.

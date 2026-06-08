@@ -1,0 +1,33 @@
+HELIOS ROBOTICS — FREQUENTLY ASKED QUESTIONS
+Document: General FAQ
+Last Updated: 2024-10-01
+
+Q: What is the maximum payload of the HeliosArm V2?
+A: The HeliosArm V2 (part HR-ARM-V2-6DOF) has a rated payload of 12 kg and a peak payload of 15 kg for short bursts (<10 seconds). Do not exceed 12 kg for continuous operation.
+
+Q: What controller do I need for the HeliosArm V2?
+A: The HC-400 controller (part HC400-CTRL) is the compatible and recommended controller for the HeliosArm V2. It must run HeliosMaster v5.2 or higher for full V2 feature support.
+
+Q: Can I use the HeliosArm V2 with ROS 2?
+A: Yes. Use the hr_ros2_bridge package (GitHub: helios-robotics/hr_ros2_bridge). The ROS 2 package is compatible with the HC-400 controller via EtherCAT and requires HeliosMaster v5.2+.
+
+Q: How long does the HeliosBase M1 battery last?
+A: Under typical conditions (120 kg load, 1.0 m/s average speed), the HR-BAT-48V40 battery provides approximately 8 hours of operation. With lighter loads or lower speeds, runtime can exceed 10 hours.
+
+Q: How do I replace the battery in the HeliosBase M1?
+A: Follow procedure PROC-MOB-M1-BAT. You will need a T20 Torx driver, 13 mm socket, ESD wrist strap, and a second person or mechanical lift. Allow ~30 minutes and perform a calibration cycle after installation.
+
+Q: What is the difference between HeliosArm V2 and the upcoming V3?
+A: The V3 (in development under PROJ-TITAN) adds a 7th degree of freedom, increases payload to 25 kg, extends reach to 1,600 mm, adds an integrated wrist camera, and uses a new in-house force-torque sensor. Availability targeted for late 2025.
+
+Q: My HeliosArm V2 is triggering frequent protective stops at high temperature. What should I do?
+A: This is a known issue (INC-2024-031) affecting Joint 4 at ambient temperatures >38°C with Joint 4 speed >120°/s. Immediate mitigation: limit Joint 4 speed to 120°/s in HeliosMaster safety configuration. A firmware fix (FW-V2-2.3.2) and hardware thermal pad kit (HR-FIX-J4-THERM) are available — contact field service.
+
+Q: What is the minimum pneumatic pressure for the HR-EE-GRIP-01 gripper?
+A: Supply pressure should be maintained between 4–6 bar, with 5 bar recommended. Pressure below 2.5 bar can cause false sensor signals on older units (see INC-2024-011). If you have a unit shipped before 2024-06-01, upgrade the reed switch using kit HR-REED-UPGRADE.
+
+Q: Who should I contact for on-site support?
+A: Email support@helios-robotics.com (Tier 1, 4-hour response SLA). For EMEA on-site support, contact Hana Völker (hana.volker@helios-robotics.com). For Americas, contact Carlos Mendoza (carlos.mendoza@helios-robotics.com).
+
+Q: Where are product incidents and advisories tracked?
+A: Incidents are tracked in ServiceNow (format INC-YYYY-NNN). Customer advisories are issued as bulletins (format BULL-YYYY-NNN). Engineering issues are in Jira project HENG.

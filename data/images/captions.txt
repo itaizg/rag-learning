@@ -1,0 +1,4 @@
+spec_arm_v2_joint_diagram.png | HeliosArm V2 (HR-ARM-V2-6DOF) joint diagram showing 6 degrees of freedom with a warning annotation on Joint 4 for high-temperature speed limiting per advisory BULL-2024-007
+spec_mobile_base_topview.png | HeliosBase M1 (HR-MOB-M1-AMR) top-view layout showing Mecanum wheel positions, LIDAR placement, warning zone (1.5 m) and protective zone (0.5 m) safety boundaries
+spec_battery_capacity_chart.png | HR-BAT-48V40 battery capacity fade chart showing degradation over charge cycles with the 450-cycle calibration alert threshold and the INC-2024-019 region above 500 cycles
+spec_controller_hc400_panel.png | HC-400 robot controller (HC400-CTRL) front panel diagram showing EtherCAT ports, GbE network ports, USB connections, E-stop inputs, and status LED

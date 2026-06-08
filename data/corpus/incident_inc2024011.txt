@@ -1,0 +1,30 @@
+HELIOS ROBOTICS — INCIDENT REPORT
+Incident ID: INC-2024-011
+Title: HR-EE-GRIP-01 Reed Switch False Open Signal at Low Pressure
+Severity: Low
+Status: Resolved
+Date Reported: 2024-03-05
+Date Closed: 2024-05-01
+Reported By: Hana Völker (Field Service, EMEA)
+Assigned To: Yuki Tanaka (Mechanical, end-effectors)
+Customer: Precision Parts BV, Netherlands
+
+DESCRIPTION
+Three HR-EE-GRIP-01 grippers at Precision Parts BV intermittently emitted a "gripper open" signal (from the reed switch) while the gripper was physically closed and gripping a part. This caused the robot program to abort mid-cycle, dropping parts approximately once every 2 hours.
+
+ROOT CAUSE
+The magnetic reed switches used in production batches shipped before 2024-06-01 (part HR-REED-01) have a smaller magnetic actuation gap than specified. When pneumatic supply pressure drops transiently below 2.5 bar (e.g., during a simultaneous pneumatic tool cycle on the same air supply), the gripper finger retracts slightly, moving the magnet out of the reed switch activation zone momentarily, triggering a false open signal.
+
+This is a design sensitivity issue: the HR-REED-01 switch has a 3 mm actuation range vs the intended 5 mm. The replacement HR-REED-02 has a 6 mm range and is immune to minor finger position variation.
+
+REMEDIATION
+1. New reed switch HR-REED-02 qualified and released 2024-04-15.
+2. Field upgrade kit HR-REED-UPGRADE: includes 2× HR-REED-02, mounting hardware, and instructions. Replacement takes ~20 minutes per gripper.
+3. All units shipped after 2024-06-01 use HR-REED-02 as standard.
+4. Customer advisory sent to all HR-EE-GRIP-01 customers with units shipped before 2024-06-01.
+
+AFFECTED UNITS
+All HR-EE-GRIP-01 units shipped before 2024-06-01 (approximately 340 units).
+
+WORKAROUND (prior to upgrade)
+Increase pneumatic supply pressure to minimum 4.5 bar and isolate gripper air supply from other tools on the same circuit.

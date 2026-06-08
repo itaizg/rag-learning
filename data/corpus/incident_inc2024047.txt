@@ -1,0 +1,27 @@
+HELIOS ROBOTICS — INCIDENT REPORT
+Incident ID: INC-2024-047
+Title: HeliosArm V2 Joint 4 Protective Stop During ISO Certification Testing
+Severity: Medium
+Status: Closed
+Date Reported: 2024-09-30
+Date Closed: 2024-10-10
+Reported By: Beatriz Santos (Controls/Safety team, internal)
+Assigned To: Sasha Ivanova, Dr. Isaac Müller
+Customer: Internal (TÜV Rheinland certification run)
+
+DESCRIPTION
+During the ISO 10218-1 certification endurance run on HeliosArm V3 prototype arm (HR-ARM-V3-PROTO-003), Joint 4 triggered a protective stop after 12,000 cycles. Investigation revealed this was NOT a V3 hardware issue — it was a V2 firmware bug (FW-V2-2.3.1) present in the shared safety PLC code base that was inadvertently copied into V3 prototype firmware.
+
+ROOT CAUSE
+The watchdog timer for joint torque alarms was set to 150 ms in the shared codebase. Under the V3 test profile (extended-range motion at 7 DOF), a benign transient torque spike lasting 145 ms was occurring at joint 4. This was within spec for V3 but tripped the V2-tuned 150 ms watchdog. The root issue is that V3 firmware should have been branched from V2 codebase before the V2.3.1 watchdog parameter was committed.
+
+REMEDIATION
+1. V3 prototype firmware branched correctly (Sasha Ivanova, 2024-10-05).
+2. V3 watchdog timer set to 250 ms per Dr. Isaac Müller's recommendation (signed off 2024-10-08).
+3. Code review process updated: all shared-codebase merges now require explicit approval from Beatriz Santos before promotion to new product firmware branches (Jira HENG-4489).
+
+IMPACT
+No customer impact. Internal certification run delayed by 8 days. New run scheduled 2024-10-18, passed successfully.
+
+RELATION TO INC-2024-031
+This incident shares the root-cause component (Joint 4 torque sensing) but is mechanistically separate. INC-2024-031 is a hardware/thermal issue on V2 units in the field; INC-2024-047 is a firmware configuration management issue on V3 prototypes.

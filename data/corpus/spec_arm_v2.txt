@@ -1,0 +1,63 @@
+HELIOS ROBOTICS — PRODUCT SPECIFICATION
+Model: HeliosArm V2 Industrial Robotic Arm
+Part Number: HR-ARM-V2-6DOF
+SKU: HRA-2024-001
+Version: 2.3.1
+Last Updated: 2024-10-15
+
+OVERVIEW
+The HeliosArm V2 is a 6-degree-of-freedom industrial robotic arm designed for precision assembly, welding, and material handling in manufacturing environments. It builds upon the V1 platform with a 40% increase in payload capacity and a new torque-sensing safety layer.
+
+PHYSICAL SPECIFICATIONS
+Payload Capacity: 12 kg (rated), 15 kg (peak, <10 seconds)
+Reach: 1,350 mm (fully extended)
+Repeatability: ±0.03 mm
+Weight (arm only): 38 kg
+Mounting: Floor, ceiling, or wall (requires adapter plate AP-WALL-02)
+Footprint: 220 mm diameter base
+
+JOINT SPECIFICATIONS
+Joint 1 (base rotation): ±170°, max 120°/s
+Joint 2 (shoulder): ±130°, max 100°/s
+Joint 3 (elbow): ±150°, max 110°/s
+Joint 4 (wrist roll): ±180°, max 150°/s
+Joint 5 (wrist pitch): ±120°, max 150°/s
+Joint 6 (wrist yaw): ±360° continuous, max 180°/s
+
+ELECTRICAL
+Input Voltage: 200–240 V AC, 3-phase, 50/60 Hz
+Peak Power Consumption: 2,800 W
+Standby Power: 45 W
+Communication Interfaces: EtherCAT (primary), Modbus TCP, PROFINET (optional module: HR-NET-PFN)
+Emergency Stop: Hardwired E-stop + software watchdog (IEC 62061 SIL 2 certified)
+
+CONTROLLER
+Compatible Controller: HeliosControl HC-400 (sold separately, part HC400-CTRL)
+Software: HeliosMaster v5.x or higher
+Programming Modes: Teach pendant, offline simulation (HeliosSim), ROS 2 compatible (ROS2-PKG-ARM)
+
+SAFETY FEATURES
+- Torque sensing on all 6 joints (ISO/TS 15066 compliant for collaborative operation)
+- Protective stop category 0 and 1
+- Joint position limits (hardware + software)
+- Speed monitoring zones configurable via HeliosMaster
+
+ENVIRONMENTAL
+Operating Temperature: 5°C to 45°C
+Storage Temperature: -20°C to 60°C
+Humidity: 20%–80% RH (non-condensing)
+IP Rating: IP54 (standard), IP65 with optional cover kit HR-COVER-IP65
+
+ACCESSORIES & RELATED PARTS
+- HR-EE-GRIP-01: Standard pneumatic gripper (payload 3 kg, stroke 50 mm)
+- HR-EE-WELD-02: MIG welding end-effector kit
+- HR-CAB-5M: 5-metre control cable
+- HR-CAB-10M: 10-metre control cable
+- AP-WALL-02: Wall-mount adapter plate
+- HR-COVER-IP65: IP65 protection cover kit
+
+KNOWN ISSUES (see incident reports INC-2024-031, INC-2024-047)
+Joint 4 torque sensor may report erratic readings above 130°/s at ambient temperatures exceeding 40°C. Firmware patch FW-V2-2.3.2 (pending release) addresses this. Interim mitigation: limit Joint 4 speed to 120°/s in HeliosMaster safety configuration.
+
+WARRANTY
+24 months from date of shipment. Excludes damage caused by operation outside rated specifications.

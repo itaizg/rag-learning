@@ -1,0 +1,44 @@
+HELIOS ROBOTICS — TEAM DIRECTORY
+Department: Engineering
+Last Updated: 2024-11-01
+
+LEADERSHIP
+- Dr. Amara Nwosu (VP Engineering) — amara.nwosu@helios-robotics.com
+  Responsible for all hardware and software engineering. Reports to CEO.
+  Joined Helios: 2020. Previously: Boston Dynamics, KUKA Robotics.
+
+- Lena Bergström (Director, Mechanical Engineering) — lena.bergstrom@helios-robotics.com
+  Leads the mechatronics and structural design team. Owns HeliosArm product line.
+  Joined Helios: 2021.
+
+- Priya Kapoor (Director, Software Engineering) — priya.kapoor@helios-robotics.com
+  Leads firmware, HeliosMaster software, and ROS 2 integration.
+  Joined Helios: 2022. Previously: ABB Robotics.
+
+MECHANICAL TEAM
+- Marcus Webb — Structural design, HeliosArm V2 joints (owner: Joint 4 torque sensor)
+- Yuki Tanaka — End-effectors (HR-EE-GRIP-01 primary designer)
+- Fatima Al-Rashid — Mobile base mechanics (HeliosBase M1)
+- Dan Okonkwo — Manufacturing liaison
+
+SOFTWARE TEAM
+- Chen Lin — HeliosMaster v5.x lead developer
+- Sasha Ivanova — Firmware (HC-400, joint servo loop)
+- Tomás Reyes — ROS 2 bridge (hr_ros2_bridge), HeliosSim
+- Nadia Osei — HeliosFleet v2.x (fleet management API)
+- Jordan Park — QA automation, CI/CD
+
+CONTROLS TEAM
+- Dr. Isaac Müller (Lead Controls Engineer) — isaac.muller@helios-robotics.com
+  Motion planning, trajectory optimisation, force control.
+- Beatriz Santos — Safety PLC firmware (HC-400), IEC 62061 certification
+
+RELATED TEAMS
+- Field Service: separate department, lead Sam Torres (sam.torres@helios-robotics.com)
+- Product Management: lead Rachel Kim
+- QA/Reliability: lead Kenji Watanabe
+
+NOTES
+All engineering issues and feature requests tracked in Jira project HENG.
+Bug escalations from field: filed as incidents in ServiceNow (prefix INC-YYYY-NNN).
+Firmware release sign-off: Dr. Isaac Müller + Priya Kapoor required.

@@ -1,0 +1,43 @@
+HELIOS ROBOTICS — TEAM DIRECTORY
+Department: Field Service & Customer Support
+Last Updated: 2024-11-01
+
+LEADERSHIP
+- Sam Torres (Director, Field Service) — sam.torres@helios-robotics.com
+  Manages global field service operations, on-site installation, and reactive maintenance.
+
+FIELD SERVICE ENGINEERS
+- Hana Völker (Europe region) — hana.volker@helios-robotics.com
+  Specialises in HeliosArm V1/V2 installation and calibration.
+- Carlos Mendoza (Americas region) — carlos.mendoza@helios-robotics.com
+  Specialises in mobile base (HeliosBase M1) and fleet integrations.
+- Aiko Yamamoto (Asia-Pacific region) — aiko.yamamoto@helios-robotics.com
+  Generalise: full system installs, HeliosFleet configuration.
+
+SUPPORT TIERS
+Tier 1 (remote): support@helios-robotics.com, response SLA 4 hours
+Tier 2 (remote engineering): escalated by Tier 1, typically Priya Kapoor's software team or Dr. Isaac Müller for controls
+Tier 3 (on-site): dispatched when Tier 1/2 cannot resolve, led by regional FSE
+
+RESPONSIBILITIES
+- Pre-installation site surveys
+- Arm and base commissioning (initial calibration, safety zone setup)
+- Periodic preventive maintenance (annual PM kit HR-PM-KIT-ANNUAL)
+- Incident investigation and root-cause analysis
+- Spare parts logistics (coordinates with warehouse, part replacements)
+
+KEY CONTACTS BY PRODUCT
+HeliosArm V2 issues: primary Hana Völker (EMEA), Carlos Mendoza (AMER)
+HeliosBase M1 issues: primary Carlos Mendoza, secondary Aiko Yamamoto
+HC-400 controller issues: escalates to software team (Sasha Ivanova / Chen Lin)
+
+TOOLS
+ServiceNow: all incidents logged here (INC-YYYY-NNN format)
+Jira: engineering escalations (project HFLD)
+Remote Access: TeamViewer for HC-400 controller remote sessions
+Parts Portal: internal portal at parts.helios-robotics.internal
+
+SLA COMMITMENTS
+Standard Support: next-business-day on-site (NBD)
+Premium Support: 4-hour on-site response
+Emergency Parts: same-day shipping for parts in stock at regional warehouse

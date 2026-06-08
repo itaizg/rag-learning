@@ -1,0 +1,60 @@
+HELIOS ROBOTICS — PROCEDURE
+Title: HeliosBase M1 — Battery Pack Replacement
+Document ID: PROC-MOB-M1-BAT
+Version: 1.3
+Last Updated: 2024-07-20
+Author: Fatima Al-Rashid, reviewed by Carlos Mendoza
+
+PREREQUISITES
+- Replacement battery pack HR-BAT-48V40 on hand
+- HeliosBase M1 is stopped and parked at charging station or safe maintenance area
+- Unit is NOT on charge
+- Required tools: T20 Torx driver, 13 mm socket wrench, ESD wrist strap
+- Estimated time: 30 minutes
+
+SAFETY WARNINGS
+⚠ Battery pack is 48 V DC. Do NOT short the terminals.
+⚠ Battery pack weighs 22 kg. Use two-person lift or mechanical assist.
+⚠ Do NOT tilt battery more than 30° during removal/installation (electrolyte risk despite LiFePO4 chemistry label — internal cell geometry).
+
+STEP 1: PREPARE THE UNIT
+1.1 Power off the HeliosBase M1 via HeliosFleet UI or the physical power button (hold 3 seconds).
+1.2 Confirm status LED is off.
+1.3 Attach ESD wrist strap.
+
+STEP 2: REMOVE BATTERY COVER
+2.1 Locate the 8× T20 Torx screws on the underside battery cover panel.
+2.2 Remove all 8 screws and set aside.
+2.3 Slide cover panel rearward 50 mm and lift off. Set aside.
+
+STEP 3: DISCONNECT BATTERY
+3.1 Locate the main power connector (orange, Deutsch DT06-6S).
+3.2 Press the connector latch and pull straight out. Do NOT pull on the cables.
+3.3 Locate the BMS communication connector (grey, JST 6-pin). Disconnect.
+3.4 Remove 4× M10 mounting bolts (13 mm socket) holding battery in frame.
+
+STEP 4: REMOVE BATTERY PACK
+4.1 With a second person or mechanical lift, slide battery forward 80 mm to clear the locating pins.
+4.2 Lift battery out vertically. Keep battery level — do NOT tilt >30°.
+4.3 Set old battery in appropriate LiFePO4 battery disposal container.
+
+STEP 5: INSTALL NEW BATTERY
+5.1 Lower new battery (HR-BAT-48V40) into frame, aligning locating pins.
+5.2 Slide rearward until seated. Confirm pins engaged.
+5.3 Install 4× M10 mounting bolts. Torque to 40 Nm.
+5.4 Connect BMS communication connector (grey, JST 6-pin) first.
+5.5 Connect main power connector (orange, DT06-6S). Confirm click.
+
+STEP 6: REPLACE COVER AND POWER ON
+6.1 Reinstall battery cover panel. Torque 8× T20 screws to 4 Nm.
+6.2 Power on unit. Confirm status LED goes green within 30 seconds.
+6.3 In HeliosFleet, verify new battery pack recognised (Fleet → Unit → Battery → Cycle Count should show 0).
+
+STEP 7: INITIAL CALIBRATION
+7.1 Perform battery calibration immediately after first installation:
+    HeliosFleet → Unit → Battery → Run Calibration Cycle.
+7.2 This takes ~3.5 hours (full charge + controlled discharge + recharge).
+7.3 After calibration, SOC accuracy will be within ±3%.
+
+NOTES
+If unit shows "Battery Fault" after replacement, check BMS communication connector seating. Also verify battery firmware version matches (HeliosFleet → Unit → Battery → Firmware: should read FW-BAT-2.1.x or higher).

@@ -1,0 +1,60 @@
+HELIOS ROBOTICS — FIRMWARE RELEASE NOTES
+Document: Firmware Version History (HeliosArm V2 + HeliosBase M1)
+Last Updated: 2024-11-01
+
+═══════════════════════════════════════════════════════════════
+HELIOSARM V2 FIRMWARE
+═══════════════════════════════════════════════════════════════
+
+FW-V2-2.3.2 (PENDING — target 2024-12-01)
+Assigned: Sasha Ivanova
+- FIX: Joint 4 torque sensor noise at elevated temperature (INC-2024-031)
+  Increases Butterworth filter to 4th order, reduces cutoff to 300 Hz,
+  adds temperature-compensation coefficient for J4 analogue path.
+- FIX: Joint 4 watchdog timer reconfigured (300 ms, INC-2024-047 follow-up)
+- Requires HC-400 firmware HC400-FW-3.1.0 or higher.
+
+FW-V2-2.3.1 (Released 2024-07-15)
+- FEATURE: Joint speed override via HeliosMaster safety zone settings
+- FIX: EtherCAT reconnection delay reduced from 5 s to 500 ms
+- FIX: HeliosSim offline program import bug (programs >500 points failed to import)
+- Note: Contains J4 watchdog timer bug (see INC-2024-047, fixed in FW-V2-2.3.2)
+
+FW-V2-2.3.0 (Released 2024-04-01)
+- FEATURE: ISO/TS 15066 collaborative operation mode (requires recertification)
+- FEATURE: ROS 2 Iron support via hr_ros2_bridge 2.1.0
+- PERF: Trajectory interpolation latency reduced by 15%
+- FIX: Joint 6 continuous rotation mode glitch at ±360° boundary
+
+FW-V2-2.2.0 (Released 2023-10-01)
+- FEATURE: PROFINET support (requires HR-NET-PFN module)
+- FIX: Torque limit alarm hysteresis increased to reduce nuisance stops
+- DEPRECATED: Legacy COM-port teach pendant (HR-PEND-T2) support removed
+
+═══════════════════════════════════════════════════════════════
+HELIOSBASE M1 FIRMWARE
+═══════════════════════════════════════════════════════════════
+
+FW-M1-1.5.1 (Released 2024-07-01)
+- FIX: BMS dynamic recalibration added (INC-2024-019)
+  Recalibration triggered every 50 charge cycles, corrects SOC drift
+  after >500 cycles.
+- FEATURE: HeliosFleet "Battery Calibration Due" alert integration
+- FIX: LIDAR TIM-781 timeout on long straight corridors (>50 m) — scan rate
+  now auto-adjusted based on environment density.
+
+FW-M1-1.5.0 (Released 2024-05-15)
+- FEATURE: HeliosFleet v3.0 telemetry protocol (pre-release data schema)
+- FEATURE: Wi-Fi 6 roaming improvements (802.11r fast transition)
+- PERF: SLAM map update rate increased by 20%
+
+FW-M1-1.4.3 (Released 2024-01-20)
+- FIX: Wheel encoder overflow at >10,000 m total travel (odometry reset bug)
+- FIX: CAN bus message loss during motor acceleration peaks
+- Note: SOC calibration drift issue present in this and earlier versions (INC-2024-019)
+
+HC-400 CONTROLLER FIRMWARE
+HC400-FW-3.1.0 (Released 2024-10-01)
+- Required for FW-V2-2.3.2 compatibility
+- FEATURE: Dual EtherCAT master support (run arm + additional peripheral on separate EtherCAT rings)
+- FIX: Safety PLC watchdog false trigger under heavy network load

@@ -1,0 +1,61 @@
+HELIOS ROBOTICS — PRODUCT SPECIFICATION
+Model: HeliosBase M1 Autonomous Mobile Robot Base
+Part Number: HR-MOB-M1-AMR
+SKU: HRM-2024-010
+Version: 1.5.0
+Last Updated: 2024-09-01
+
+OVERVIEW
+The HeliosBase M1 is an omnidirectional autonomous mobile robot (AMR) base designed for indoor logistics and last-metre delivery in warehouses, hospitals, and manufacturing floors. It can carry up to 120 kg and integrates with the HeliosArm V2 via the HR-DOCK-ARM adapter (part HR-DOCK-ARM-M1) to form a complete mobile manipulation platform.
+
+PHYSICAL SPECIFICATIONS
+Payload Capacity: 120 kg
+Max Speed (loaded): 1.2 m/s
+Max Speed (unloaded): 1.8 m/s
+Battery: 48 V, 40 Ah LiFePO4 (part HR-BAT-48V40)
+Battery Life: 8 hours typical (120 kg load, 1.0 m/s average)
+Charge Time: 2.5 hours (fast charger HR-CHRG-FC), 5 hours (standard)
+Weight (base only): 85 kg
+Footprint: 700 mm × 600 mm
+Height: 300 mm (without payload platform)
+
+DRIVE SYSTEM
+Drive Type: 4-wheel omni (Mecanum wheels)
+Wheel Diameter: 200 mm
+Turning Radius: 0 mm (in-place rotation)
+Obstacle Avoidance: 360° LIDAR (SICK TIM-781, part HR-LIDAR-TIM781) + 4 ultrasonic sensors
+Navigation: SLAM + map-based with dynamic re-planning (ROS 2 Navigation Stack)
+
+COMMUNICATION
+Interfaces: Wi-Fi 6 (802.11ax), Gigabit Ethernet, CAN bus (internal)
+Fleet Management: HeliosFleet v2.x API (REST + WebSocket)
+Emergency Stop: Hardware button + software watchdog + remote E-stop via fleet API
+
+SENSORS
+LIDAR: SICK TIM-781 (mounted front-top)
+Ultrasonic: ×4 (front, rear, left, right bumper zones)
+IMU: 6-axis (internal, non-replaceable)
+Odometry: Wheel encoders (1024 PPR) + IMU fusion
+
+INTEGRATION
+HeliosArm V2 Mount: HR-DOCK-ARM-M1 adapter plate (rated 40 kg arm weight + 12 kg payload)
+Power Pass-Through: 200–240 V AC output for mounted arm controller (max 3,500 W)
+
+SAFETY
+ISO 3691-4 compliant (industrial trucks — automated)
+Laser safety zone: configurable via HeliosFleet (warning zone 1.5 m, protective zone 0.5 m default)
+Emergency deceleration: full stop within 0.4 m at 1.2 m/s
+
+ENVIRONMENTAL
+Operating Temperature: 5°C to 40°C
+Humidity: 20%–80% RH
+Floor Conditions: Dry, flat indoor; max slope 5°; max threshold 10 mm
+
+ACCESSORIES
+- HR-DOCK-ARM-M1: HeliosArm V2 mounting adapter
+- HR-BAT-48V40: Replacement battery pack
+- HR-CHRG-FC: Fast charger (48 V, 20 A)
+- HR-LIDAR-TIM781: Replacement LIDAR unit
+
+KNOWN ISSUES
+Battery calibration drift can occur after >500 charge cycles, causing the state-of-charge indicator to read ~10% high. Addressed in firmware FW-M1-1.5.1. See also incident report INC-2024-019.

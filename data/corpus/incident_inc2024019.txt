@@ -1,0 +1,28 @@
+HELIOS ROBOTICS — INCIDENT REPORT
+Incident ID: INC-2024-019
+Title: HeliosBase M1 Battery SOC Indicator Reads ~10% High After 500+ Charge Cycles
+Severity: Medium
+Status: Resolved
+Date Reported: 2024-05-20
+Date Closed: 2024-07-15
+Reported By: Carlos Mendoza (Field Service, Americas)
+Assigned To: Nadia Osei (HeliosFleet software), Fatima Al-Rashid (Mechanical)
+Customer: MedLogix Inc., Chicago, USA (fleet of 8 HeliosBase M1 units)
+
+DESCRIPTION
+MedLogix reported that their oldest four HeliosBase M1 units (>18 months in service, all with >500 charge cycles) were running out of battery charge unexpectedly, despite HeliosFleet dashboard showing >15% remaining charge at the time of shutdown. One unit stopped mid-corridor at a hospital floor, causing a near-miss with a nurse pushing a medication cart.
+
+ROOT CAUSE
+After >500 full charge/discharge cycles, the LiFePO4 cells in battery pack HR-BAT-48V40 exhibit capacity fade (~12% average). The battery management system (BMS) on units with firmware < FW-M1-1.4.3 uses a calibration table built at commissioning time and does not recalibrate dynamically. This causes the SOC (state of charge) estimate to be systematically optimistic, reading approximately 10–15% higher than actual.
+
+REMEDIATION
+1. Firmware FW-M1-1.5.1: adds dynamic BMS recalibration triggered every 50 charge cycles. Released 2024-07-01.
+2. Customer advisory: units with >400 cycles should be manually recalibrated. Procedure in KB-2024-019.
+3. HeliosFleet now displays a "Battery Calibration Due" alert when cycle count >450 and last recalibration >60 days (Nadia Osei, released in HeliosFleet v2.4.1).
+4. MedLogix: all 8 units updated to FW-M1-1.5.1 and manually recalibrated on-site by Carlos Mendoza (2024-07-10).
+
+IMPACT
+Near-miss safety event at MedLogix. No injuries. Helios issued formal apology and provided 6 months extended warranty on MedLogix fleet. Internal process review: added battery cycle count to standard quarterly health check checklist (HR-PM-KIT-ANNUAL updated).
+
+AFFECTED UNITS
+All HeliosBase M1 units with firmware < FW-M1-1.5.1 and >450 charge cycles. Estimated: 23 units worldwide.

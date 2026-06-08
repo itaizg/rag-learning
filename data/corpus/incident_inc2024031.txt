@@ -1,0 +1,35 @@
+HELIOS ROBOTICS — INCIDENT REPORT
+Incident ID: INC-2024-031
+Title: HeliosArm V2 Joint 4 Torque Sensor Erratic Readings at High Temperature
+Severity: High
+Status: Mitigated (firmware patch pending)
+Date Reported: 2024-08-14
+Date Closed: Open
+Reported By: Hana Völker (Field Service, EMEA)
+Assigned To: Sasha Ivanova (Firmware), Marcus Webb (Mechanical)
+Customer: AutoFab GmbH, Stuttgart, Germany
+
+DESCRIPTION
+During a sustained high-speed welding cycle at AutoFab GmbH's plant (ambient temperature ~42°C), Joint 4 of two HeliosArm V2 units (serial numbers HR-ARM-V2-001842 and HR-ARM-V2-001843) reported torque sensor readings that spiked to ±250% of expected values at joint speeds above 130°/s. This triggered protective stops approximately 3–5 times per hour, halting the welding line and causing an estimated €18,000 per day in lost production.
+
+ROOT CAUSE ANALYSIS
+Investigation by Marcus Webb and Sasha Ivanova (2024-08-22):
+1. The Joint 4 torque sensor (OEM part TRQ-EXT-J4) uses an analogue signal path that is susceptible to thermal noise above 38°C due to insufficient thermal isolation from the joint's main bearing housing.
+2. At speeds >130°/s, the sensor sampling frequency (8 kHz) creates aliasing artefacts that are amplified by the noise floor increase at elevated temperatures.
+3. The firmware's noise filter (Butterworth, 2nd order, 500 Hz cutoff) is not aggressive enough to suppress these artefacts.
+
+IMMEDIATE MITIGATION (applied 2024-08-23)
+- HeliosMaster safety configuration updated to limit Joint 4 max speed to 120°/s on both units.
+- AutoFab GmbH production resumed with ~8% cycle time increase.
+
+LONG-TERM REMEDIATION
+1. Firmware patch FW-V2-2.3.2: increase filter order to 4th, reduce cutoff to 300 Hz, add temperature-compensation coefficient. Estimated release: 2024-12-01.
+2. Hardware fix (V2.3.x units only): add thermal pad HR-THRM-J4-PAD to J4 sensor mount. Kit part: HR-FIX-J4-THERM. Field upgrade can be done by FSE in ~90 minutes.
+3. HeliosArm V3 (PROJ-TITAN) redesigns this joint with in-house FTS-HR-01 sensor and improved thermal management — long-term permanent fix.
+
+AFFECTED UNITS
+All HeliosArm V2 units with firmware < FW-V2-2.3.2 operating at ambient temperature >38°C and Joint 4 programmed speed >120°/s. Estimated affected fleet: ~47 units worldwide.
+
+COMMUNICATION
+Customer notification sent 2024-09-01 (all HeliosArm V2 customers).
+Advisory bulletin: BULL-2024-007.

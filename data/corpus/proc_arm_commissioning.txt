@@ -1,0 +1,48 @@
+HELIOS ROBOTICS — PROCEDURE
+Title: HeliosArm V2 — Initial Commissioning Procedure
+Document ID: PROC-ARM-V2-COMM
+Version: 2.1
+Last Updated: 2024-09-15
+Author: Hana Völker, reviewed by Dr. Isaac Müller
+
+PREREQUISITES
+- HC-400 controller installed and powered on
+- HeliosMaster v5.2 or higher installed on controller
+- Robot arm mechanically mounted (torque all M12 base bolts to 90 Nm)
+- All cable connections made (HR-CAB-5M or HR-CAB-10M)
+- E-stop tested: confirm controller enters E-stop state when button pressed
+
+STEP 1: POWER ON SEQUENCE
+1.1 Apply 3-phase AC power to HC-400.
+1.2 Wait for HeliosMaster boot sequence (~45 seconds). Status LED: blue (booting) → green (ready).
+1.3 If LED stays red: check E-stop circuit (both E-stop inputs must be bridged or hardwired).
+
+STEP 2: JOINT CALIBRATION
+2.1 In HeliosMaster: go to Setup → Calibration → Full Calibration Wizard.
+2.2 Follow the wizard: jog each joint to its hard stop and confirm. Do NOT exceed 10% speed during calibration.
+2.3 Calibration data saved to /home/helios/calibration/arm_YYYYMMDD.json. Back up immediately (USB or network share).
+
+STEP 3: SAFETY ZONE CONFIGURATION
+3.1 Define the robot's workspace envelope in HeliosMaster: Setup → Safety → Workspace Zones.
+3.2 Set Joint 4 maximum speed to 120°/s if ambient temperature may exceed 38°C (see advisory BULL-2024-007).
+3.3 Test each safety zone at 10% speed.
+
+STEP 4: END-EFFECTOR INSTALLATION
+4.1 Mount end-effector to ISO 9283 flange. Torque M6 bolts to 10 Nm.
+4.2 Connect tool I/O cable to HC-400 tool I/O header.
+4.3 In HeliosMaster: Setup → Tool → New Tool, enter TCP (Tool Centre Point) coordinates.
+4.4 Verify TCP with the 4-point TCP calibration method.
+
+STEP 5: FIRST MOTION TEST
+5.1 Use teach pendant to jog each joint individually at 5% speed. Verify smooth motion and no alarms.
+5.2 Run the built-in self-test program (HeliosMaster: Diagnostics → Self-Test → Full) at 20% speed.
+5.3 Check all joint torque sensor readings are in normal range (Diagnostics → Joint Status).
+
+STEP 6: SIGN-OFF
+6.1 Record arm serial number, firmware version, calibration file timestamp, and commissioning FSE name in the installation checklist (form HR-FORM-COMM-V2).
+6.2 Submit form HR-FORM-COMM-V2 to sam.torres@helios-robotics.com and create ServiceNow record.
+
+COMMON ISSUES
+- Joint 1 alarm on first move: usually cable connector not fully seated. Power off and re-seat HR-CAB connectors.
+- Calibration wizard hangs at Joint 3: check for mechanical obstruction; do not force.
+- HeliosMaster not detecting arm: verify EtherCAT cable on correct port (port labelled "EtherCAT MASTER").

@@ -1,0 +1,61 @@
+HELIOS ROBOTICS — PRODUCT SPECIFICATION
+Model: HeliosControl HC-400 Robot Controller
+Part Number: HC400-CTRL
+SKU: HCC-2024-020
+Version: 1.2.0
+Last Updated: 2024-08-20
+
+OVERVIEW
+The HC-400 is the primary motion controller for the HeliosArm V2 and HeliosArm V1 (legacy). It runs HeliosMaster software (v5.x required for V2 arm features) and provides real-time control at 4 kHz servo rate. It supports EtherCAT, Modbus TCP, and optional PROFINET via expansion module.
+
+HARDWARE
+CPU: Intel Core i7-12700H (embedded industrial)
+RAM: 32 GB DDR5
+Storage: 512 GB NVMe SSD (OS + program storage)
+Real-Time Core: Dedicated ARM Cortex-M7 for servo loop (isolated from OS)
+Operating System: Ubuntu 22.04 LTS (real-time kernel PREEMPT_RT)
+
+CONNECTIVITY
+EtherCAT: ×2 ports (master + slave daisy-chain)
+Ethernet: ×2 GbE (one for teach pendant, one for network)
+USB: ×4 USB-A 3.0 (teach pendant, USB key backup)
+HDMI: ×1 (for external monitor)
+GPIO: ×16 digital I/O (24 V), ×4 analog I/O (0–10 V)
+E-Stop: ×2 hardwired E-stop inputs (category 3, PL d per ISO 13849)
+
+TEACH PENDANT
+Compatible Pendant: HR-PEND-T3 (touchscreen, 10.1", IP54)
+Connection: Dedicated 10/100 Ethernet over HR-CAB-PEND cable
+Wireless Pendant: HR-PEND-T3W (Wi-Fi 6, optional, requires HR-NET-WIFI module)
+
+PERFORMANCE
+Servo Update Rate: 4,000 Hz
+Path Planning: 250 Hz
+Interpolation: Linear, circular, spline, and joint-space
+Max Programmed Points: 64,000 per project
+Program Memory: Stored on NVMe (no practical limit for typical programs)
+
+SOFTWARE
+HeliosMaster v5.x: Visual programming (drag-and-drop), ladder logic, structured text
+Offline Simulation: HeliosSim (runs on Windows/Linux, connects to HC-400 for program upload)
+ROS 2 Interface: Via hr_ros2_bridge package (GitHub: helios-robotics/hr_ros2_bridge)
+Backup/Restore: USB key or network (SMB share)
+
+SAFETY
+Safety Controller: Integrated TÜV-certified safety PLC (IEC 62061 SIL 2)
+Speed Monitoring: Configurable workspace zones with speed limits
+Force/Torque Limits: Configurable per joint via HeliosMaster safety settings
+Safe Torque Off (STO): Supported
+
+ENVIRONMENTAL
+Operating Temperature: 5°C to 45°C
+Humidity: 10%–90% RH (non-condensing)
+Cooling: Forced air (front-to-back); minimum 50 mm clearance on all sides
+Input Power: 100–240 V AC, single-phase, 50/60 Hz; max 500 W
+
+ACCESSORIES
+- HR-PEND-T3: Standard teach pendant
+- HR-PEND-T3W: Wireless teach pendant
+- HR-CAB-PEND: Pendant cable (3 m standard, 5 m optional HR-CAB-PEND-5M)
+- HR-NET-PFN: PROFINET expansion module
+- HR-NET-WIFI: Wi-Fi 6 expansion module

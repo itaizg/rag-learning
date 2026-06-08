@@ -1,0 +1,37 @@
+HELIOS ROBOTICS — PROJECT BRIEF
+Project Name: Project FleetAI
+Project Code: PROJ-FLEET-AI
+Status: Active (Phase 1 of 2)
+Start Date: 2024-03-01
+Target Completion: 2025-03-31
+Project Owner: Dr. Amara Nwosu
+Lead Engineer: Nadia Osei (HeliosFleet software)
+ML Lead: Tomás Reyes
+
+OBJECTIVE
+Integrate AI-assisted dynamic route planning and predictive maintenance into HeliosFleet v3.0, enabling a fleet of HeliosBase M1 AMRs to self-optimise routes in real time and predict battery and motor maintenance needs before failures occur.
+
+SCOPE
+- Dynamic re-routing: ML model (reinforcement learning) for multi-AMR traffic management
+- Predictive maintenance: anomaly detection on battery, motor, and LIDAR telemetry
+- Alerting integration: push notifications to Slack (#fleet-alerts) and ServiceNow auto-ticket creation
+- Dashboard: new HeliosFleet v3.0 UI (React + TypeScript)
+- API: backward-compatible HeliosFleet v2.x REST API maintained; new v3 endpoints added
+
+CURRENT STATUS (as of 2024-11-01)
+- RL route planning: model trained on sim data, in field pilot at Warehouse Client A (3 AMRs)
+- Predictive maintenance: data pipeline complete, model in training (Tomás Reyes)
+- ServiceNow integration: complete (Nadia Osei)
+- Slack integration: complete (#fleet-alerts channel live)
+- Dashboard: 60% complete, target release 2025-01-15
+
+KEY DEPENDENCIES
+- HeliosBase M1 firmware FW-M1-1.5.1: required for telemetry accuracy (currently in rollout)
+- Cloud infrastructure: AWS EKS cluster provisioned (PROJ-INFRA-2024-07)
+
+RISKS
+1. Field pilot data volume lower than expected (3 AMRs vs 10 planned); model validation timeline slips
+2. React dashboard hire: frontend engineer position open since 2024-09-01 (Jordan Park covering temporarily)
+
+INTEGRATION NOTES
+Future: HeliosArm V3 wrist camera feeds may integrate with FleetAI for pick-point optimisation (see PROJ-TITAN). Currently out of scope for v3.0.

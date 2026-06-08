@@ -1,0 +1,49 @@
+HELIOS ROBOTICS — PROJECT BRIEF
+Project Name: Project Titan
+Project Code: PROJ-TITAN
+Status: Active (Phase 2 of 3)
+Start Date: 2024-01-15
+Target Completion: 2025-06-30
+Project Owner: Dr. Amara Nwosu (VP Engineering)
+Lead Engineer: Lena Bergström
+
+OBJECTIVE
+Develop the HeliosArm V3, the next-generation 7-DOF robotic arm with integrated vision, increased payload (25 kg), and a new force-torque sensor suite designed in-house (replacing the OEM sensor used in V2).
+
+SCOPE
+- New kinematic chain: 7 DOF (additional wrist twist joint vs V2's 6 DOF)
+- Payload: 25 kg (V2: 12 kg), reach 1,600 mm (V2: 1,350 mm)
+- Integrated wrist camera: Intel RealSense D435i (part HR-CAM-D435I)
+- In-house force-torque sensor: FTS-HR-01 (6-axis, designed by Dr. Isaac Müller's team)
+- Improved thermal management for joint 4 (addresses known INC-2024-031 issue)
+- Compatible with HC-400 controller (firmware upgrade) and new HC-500 controller (PROJ-CTRL-500)
+
+PHASE STATUS
+Phase 1 (Design & Prototyping): COMPLETE (2024-01-15 – 2024-07-30)
+  - Kinematic design frozen
+  - FTS-HR-01 prototype validated in lab
+  - 3 prototype arms built
+
+Phase 2 (Validation & Testing): IN PROGRESS (2024-08-01 – 2025-01-31)
+  - Endurance testing: 500,000 cycle target (currently at 180,000 cycles as of 2024-11-01)
+  - EMC testing: scheduled 2024-12
+  - ISO 10218-1 certification: in progress with TÜV Rheinland
+
+Phase 3 (Industrialisation): PENDING
+  - Manufacturing process setup
+  - Service documentation
+  - Partner training
+
+KEY RISKS
+1. FTS-HR-01 sensor shows 0.5% drift after 200,000 cycles (under investigation by Dr. Isaac Müller, Jira HENG-4521)
+2. HC-500 controller (dependency) behind schedule by ~6 weeks (PROJ-CTRL-500 status: Phase 1 delayed)
+3. RealSense D435I supply chain: lead time increased to 18 weeks (procurement tracking PR-2024-088)
+
+BUDGET
+Approved: $4.2M
+Spent to date: $2.8M (as of 2024-10-31)
+Forecast at completion: $4.5M (budget overrun risk flagged to board)
+
+RELATED PROJECTS
+- PROJ-CTRL-500: HC-500 controller development
+- PROJ-FLEET-AI: AI-assisted fleet planning (potential integration with V3 vision)

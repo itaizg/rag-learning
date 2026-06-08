@@ -1,0 +1,42 @@
+HELIOS ROBOTICS — PRODUCT SPECIFICATION
+Model: HeliosGrip Standard Pneumatic Gripper
+Part Number: HR-EE-GRIP-01
+SKU: HEE-2024-030
+Version: 2.0.1
+Last Updated: 2024-07-10
+
+OVERVIEW
+The HR-EE-GRIP-01 is a two-finger parallel pneumatic gripper designed for the HeliosArm V2 end-effector interface (ISO 9283 flange, 50 mm bolt circle). It provides 50 mm stroke, 3 kg gripping force, and integrated position sensing for open/closed detection.
+
+PHYSICAL SPECIFICATIONS
+Stroke (per finger): 25 mm (total open width 50 mm adjustable)
+Gripping Force: 30–180 N (adjustable via air pressure 2–6 bar)
+Weight: 0.9 kg
+Mounting: ISO 9283 flange, 50 mm bolt circle, M6 bolts ×4
+Finger Material: Hardened steel (standard), or aluminium (HR-EE-GRIP-01-AL variant)
+
+PNEUMATIC
+Supply Pressure: 4–6 bar (recommended 5 bar)
+Air Consumption: 2.1 L/cycle (at 5 bar, full stroke)
+Port Size: G1/8 (×2, open and close)
+Solenoid Valve: Optional HR-SOL-5P (5/2-way, 24 V DC, included in bundle HR-GRIP-KIT-01)
+
+SENSING
+Position Sensors: 2× magnetic reed switches (open + closed positions)
+Output: 24 V DC PNP, wired to HR-ARM-V2 tool I/O header
+
+COMPATIBLE ARMS
+- HeliosArm V2 (HR-ARM-V2-6DOF)
+- HeliosArm V1 (with adapter ring HR-EE-ADAPT-V1)
+
+ACCESSORIES
+- HR-GRIP-KIT-01: Complete kit (gripper + solenoid + 2 m air hose + mounting hardware)
+- HR-EE-GRIP-01-AL: Aluminium finger variant (lighter, lower payload: 1.5 kg)
+- HR-EE-ADAPT-V1: V1 arm adapter ring
+- HR-FINGER-SOFT-01: Soft silicone finger covers for delicate objects
+
+MAINTENANCE
+Lubrication interval: Every 500,000 cycles or 12 months (whichever first). Use food-grade grease if handling food items. Refer to maintenance manual HR-MNT-GRIP-01.
+
+KNOWN ISSUES
+Reed switch HR-REED-01 (factory-installed in units shipped before 2024-06-01) can give false "open" signal when supply pressure drops below 2.5 bar transiently. Replace with HR-REED-02 (field upgrade kit HR-REED-UPGRADE). See incident INC-2024-011.
