@@ -1,162 +1,122 @@
-# RAG Learning — 7 Design Patterns
+# AI Learning Notebooks
 
-Hands-on Jupyter notebooks covering every pattern from the **RAG Design Patterns** infographic, from Naive RAG through to Multi-Agent RAG.
+A self-paced, hands-on curriculum that takes you from *"I use AI tools"* to *"I understand and build AI systems."* Every notebook teaches one concept with a plain-English explanation, working code you can run, a visualization, and three exercises (with solutions).
 
-Each notebook is fully runnable with **two backends**:
-- **Claude** (uses your `ANTHROPIC_API_KEY`) — best quality
-- **Fully local / offline** via Ollama + sentence-transformers — runs on your Mac GPU (MPS/Metal)
+The curriculum is organized into tiers that mirror a natural learning progression. Plus a bonus 7th tier: the original **RAG Design Patterns** notebooks.
+
+```
+Tier 1  Foundations          how AI/LLMs actually work          (00–06)
+Tier 2  Training             how models are trained & aligned   (07–11)
+Tier 3  Building with LLMs   RAG, caching, inference            (12–17)   [planned]
+Tier 4  Agent Engineering    systems that use LLMs              (18–23)   [planned]
+Tier 5  Evaluation & Prod    measuring & shipping AI            (24–27)   [planned]
+Tier 6  Projects             capstones (train/RAG/agents)       (P1–P4)   [planned]
+Tier 7  RAG Design Patterns  the original rag_learning series   (01–07)   ✅
+```
 
 ---
 
-## Quick start
+## Curriculum map
 
-### 1. Install dependencies
+```mermaid
+graph TD
+    subgraph T1["Tier 1 — Foundations ✅"]
+        N00[00 Environment Check] --> N01[01 Neural Networks]
+        N01 --> N02[02 Tokenization] --> N03[03 Embeddings]
+        N03 --> N04[04 Attention] --> N05[05 Transformer Arch] --> N06[06 How LLMs Work]
+    end
+    subgraph T2["Tier 2 — Training ✅"]
+        N07[07 Pretraining & Scaling] --> N08[08 Fine-tuning & LoRA]
+        N08 --> N09[09 RLHF & Alignment] --> N10[10 Quantization] --> N11[11 Speculative Decoding]
+    end
+    subgraph T3["Tier 3 — Building (planned)"]
+        N12[12 Prompt Eng] --> N14[14 RAG] --> N16[16 RAG vs CAG]
+    end
+    N06 --> N07
+    N11 --> N12
+```
+
+---
+
+## Status
+
+| Tier | Notebooks | Status |
+|------|-----------|--------|
+| 1 — Foundations | `00_setup/`, `01_foundations/` (00–06) | ✅ Built & executed |
+| 2 — Training | `02_training/` (07–11) | ✅ Built & executed |
+| 3 — Building | `03_building/` (12–17) | ⬜ Planned |
+| 4 — Agents | `04_agents/` (18–23) | ⬜ Planned |
+| 5 — Evaluation | `05_evaluation/` (24–27) | ⬜ Planned |
+| 6 — Projects | `06_projects/` (P1–P4) | ⬜ Planned |
+| 7 — RAG Patterns | `07_rag_learning/` (00–07) | ✅ Pre-existing |
+
+### Tier 1 — Foundations
+| # | Notebook | Key concepts |
+|---|----------|--------------|
+| 00 | [Environment Check](00_setup/00_environment_check.ipynb) | device detection (cuda/mps/cpu), `.env`, package checks |
+| 01 | [Neural Networks](01_foundations/01_neural_networks.ipynb) | forward/backprop from scratch in NumPy, gradient descent, autograd |
+| 02 | [Tokenization](01_foundations/02_tokenization.ipynb) | BPE from scratch, GPT-2 tokenizer, tokens vs words |
+| 03 | [Embeddings](01_foundations/03_embeddings.ipynb) | cosine similarity, meaning maps (PCA), semantic search |
+| 04 | [Attention Mechanism](01_foundations/04_attention_mechanism.ipynb) | scaled dot-product attention, contextual "Apple" demo, multi-head |
+| 05 | [Transformer Architecture](01_foundations/05_transformer_architecture.ipynb) | blocks, residuals, layer norm, positional encoding, TinyGPT |
+| 06 | [How LLMs Work](01_foundations/06_how_llms_work.ipynb) | next-token prediction, temperature, top-k/p, hallucination |
+
+### Tier 2 — Training
+| # | Notebook | Key concepts |
+|---|----------|--------------|
+| 07 | [Pretraining & Scaling](02_training/07_pretraining_and_scaling.ipynb) | next-token pretraining, compression, scaling laws (measured) |
+| 08 | [Fine-tuning & LoRA](02_training/08_fine_tuning_and_lora.ipynb) | LoRA from scratch, adapter swapping/merging, QLoRA |
+| 09 | [RLHF & Alignment](02_training/09_rlhf_and_alignment.ipynb) | reward model (Bradley–Terry), PPO + KL leash, DPO |
+| 10 | [Quantization](02_training/10_quantization.ipynb) | symmetric/per-channel int8/int4, error cliff, memory |
+| 11 | [Speculative Decoding](02_training/11_speculative_decoding.ipynb) | draft→verify, accept/reject identity proof, speedup |
+
+### Tier 7 — RAG Design Patterns (pre-existing)
+See [07_rag_learning/](07_rag_learning/) — Naive RAG → Rerank → Multimodal → Graph → Hybrid → Agentic → Multi-Agent. These run with a Claude **or** fully-local (Ollama) backend on the "Helios Robotics" dataset. (Setup for Ollama/Neo4j is documented inside the first notebook.)
+
+---
+
+## Setup
+
+This repo is managed with [`uv`](https://docs.astral.sh/uv/) (Python 3.13). Plain `pip` works too.
 
 ```bash
+# Option A — uv (recommended)
 uv sync
-uv run python -m ipykernel install --user --name rag-learning --display-name "RAG Learning (Python)"
+
+# Option B — pip
+python -m venv .venv && source .venv/bin/activate
+pip install -r requirements.txt
+
+# Option C — conda
+conda env create -f environment.yml && conda activate ai-learning
 ```
 
-### 2. Start Ollama (for local backend)
+API keys (only needed from Tier 3 onward):
 
 ```bash
-brew services start ollama
-ollama pull llama3.1:8b          # text model (~4.7 GB)
-ollama pull llama3.2-vision       # vision model for notebook 03 (~7.9 GB)
+cp .env.example .env     # then fill in ANTHROPIC_API_KEY / OPENAI_API_KEY
 ```
 
-### 3. Start Neo4j in Docker (for notebooks 04 and 05)
+**Tiers 1–2 run fully offline** — no API key required. A few notebooks download small open models (GPT-2, DistilBERT, MiniLM) on first run; they cache locally and fall back gracefully if you're offline.
+
+Launch:
 
 ```bash
-docker run -d --name helios-neo4j \
-  -p 7474:7474 -p 7687:7687 \
-  -e NEO4J_AUTH=neo4j/helios-rag-2025 \
-  -e NEO4J_PLUGINS='["apoc"]' \
-  neo4j:5
+uv run jupyter lab      # or: jupyter lab
 ```
-
-Neo4j Browser → http://localhost:7474 (user: `neo4j`, pass: `helios-rag-2025`)
-
-### 4. Launch JupyterLab
-
-```bash
-uv run jupyter lab
-```
-
-Open notebooks in order, starting with `notebooks/00_setup_and_foundations.ipynb`.
 
 ---
 
-## Notebooks
+## Start here
 
-| Notebook | Pattern | Key Concepts |
-|---|---|---|
-| [00 — Setup & Foundations](notebooks/00_setup_and_foundations.ipynb) | — | Embeddings, cosine similarity, chunking, vector DB, prompt templates |
-| [01 — Naive RAG](notebooks/01_naive_rag.ipynb) | Basic RAG | Bi-encoder retrieval, ChromaDB, failure modes |
-| [02 — Retrieve-and-Rerank](notebooks/02_retrieve_and_rerank.ipynb) | Reranking | Cross-encoder, bi-encoder vs cross-encoder, before/after |
-| [03 — Multimodal RAG](notebooks/03_multimodal_rag.ipynb) | Multimodal | CLIP embeddings, text→image, vision LLM |
-| [04 — Graph RAG](notebooks/04_graph_rag.ipynb) | Graph | Neo4j, entity extraction, multi-hop traversal, Cypher |
-| [05 — Hybrid RAG](notebooks/05_hybrid_rag.ipynb) | Dense+Sparse | BM25, Reciprocal Rank Fusion, exact code retrieval |
-| [06 — Agentic RAG (Router)](notebooks/06_agentic_rag_router.ipynb) | Agentic | Tool-calling, routing decisions, agentic loop |
-| [07 — Agent RAG (Multi-Agent)](notebooks/07_agent_rag_multi_agent.ipynb) | Multi-Agent | Planner, parallel dispatch, Slack/ServiceNow integrations |
+- **"I use AI tools but don't understand them"** → start at notebook **01** (Neural Networks) and go in order.
+- **"I understand the basics, I want to build"** → skim Tier 1, then start at **07** (Training) or jump to Tier 3 when it lands.
+- **"I want to build production agent systems"** → do Tier 2, then head to Tier 4 (Agents) / Tier 7 (RAG patterns).
+
+Every notebook lists its prerequisites in the header cell, so you always know what to read first.
 
 ---
 
-## The backend toggle
+## Notebook standard
 
-Every notebook has this cell near the top:
-
-```python
-import ragkit.config as cfg
-cfg.BACKEND = "claude"   # "claude" | "local"
-```
-
-- `"claude"` — uses Anthropic API (`ANTHROPIC_API_KEY` env var required)
-- `"local"` — uses Ollama (fully offline, Metal-accelerated on your Mac)
-
-Embeddings and reranking always run locally on MPS regardless of this toggle — only text/vision *generation* switches.
-
----
-
-## The Helios Robotics dataset
-
-A fictional robotics company dataset that threads through all 7 notebooks:
-
-```
-data/
-├── corpus/                     18 documents:
-│   ├── spec_arm_v2.txt          HeliosArm V2 spec (part: HR-ARM-V2-6DOF)
-│   ├── spec_mobile_base.txt     HeliosBase M1 spec (part: HR-MOB-M1-AMR)
-│   ├── spec_controller_hc400.txt HC-400 controller (part: HC400-CTRL)
-│   ├── spec_gripper_ee01.txt    Standard gripper (part: HR-EE-GRIP-01)
-│   ├── spec_firmware_release_notes.txt firmware history
-│   ├── team_engineering.txt     Engineering team directory
-│   ├── team_field_service.txt   Field service team
-│   ├── project_titan.txt        HeliosArm V3 development project
-│   ├── project_fleet_ai.txt     AI fleet management project
-│   ├── incident_inc2024031.txt  Joint 4 thermal issue (high severity)
-│   ├── incident_inc2024047.txt  Firmware config management issue
-│   ├── incident_inc2024019.txt  Battery SOC drift issue
-│   ├── incident_inc2024011.txt  Gripper reed switch false signal
-│   ├── proc_arm_commissioning.txt commissioning procedure
-│   ├── proc_battery_replacement.txt battery swap procedure
-│   ├── faq_general.txt          General FAQ
-│   └── faq_software.txt         Software/controller FAQ
-└── images/                    4 technical diagrams
-    ├── spec_arm_v2_joint_diagram.png
-    ├── spec_mobile_base_topview.png
-    ├── spec_battery_capacity_chart.png
-    └── spec_controller_hc400_panel.png
-```
-
-The dataset is designed so that:
-- **Part numbers** (`HR-REED-UPGRADE`, `HC400-CTRL`) stress-test exact-match retrieval (hybrid RAG)
-- **Multi-hop questions** require connecting incidents → specs → projects → people (graph RAG)
-- **Images** are needed to answer certain questions fully (multimodal RAG)
-
----
-
-## Shared library: `ragkit/`
-
-```
-ragkit/
-├── config.py       BACKEND, DEVICE detection (mps/cuda/cpu), Neo4j/Ollama config
-├── llm.py          generate() + generate_tools() — works identically for Claude and Ollama
-├── embeddings.py   embed() for text, clip_embed_*() for multimodal (sentence-transformers)
-├── vectorstore.py  ChromaDB helpers: build_collection(), query_collection(), Hit dataclass
-├── rerank.py       rerank() via cross-encoder (ms-marco-MiniLM-L-6-v2)
-├── data.py         load_corpus(), load_images(), chunk_text(), build_chunked_corpus()
-└── pretty.py       Rich-formatted display: show_hits(), show_prompt(), compare_rankings()
-```
-
-The notebooks keep all pattern-specific logic **inline and visible** — `ragkit` only holds
-repetitive plumbing so you can see every algorithm clearly.
-
----
-
-## Hardware & MLX alternative
-
-Embeddings and reranking run on **MPS (Metal)** automatically on your Mac.
-
-For local generation, this repo uses **Ollama** (easiest setup). If you prefer Apple's MLX framework for even faster inference on Apple Silicon:
-
-```bash
-pip install mlx-lm
-mlx_lm.generate --model mlx-community/Llama-3.1-8B-Instruct-4bit --prompt "Hello"
-```
-
-Then in `ragkit/config.py`, set `OLLAMA_TEXT_MODEL` to your MLX server endpoint or adapt `llm.py`.
-
----
-
-## Environment variables
-
-| Variable | Default | Purpose |
-|---|---|---|
-| `ANTHROPIC_API_KEY` | — | Required for Claude backend |
-| `ANTHROPIC_BASE_URL` | api.anthropic.com | Override if using a proxy |
-| `RAG_BACKEND` | `claude` | Project-wide default (`claude`/`local`) |
-| `NEO4J_URI` | `bolt://localhost:7687` | Neo4j connection |
-| `NEO4J_USER` | `neo4j` | Neo4j username |
-| `NEO4J_PASSWORD` | `helios-rag-2025` | Neo4j password |
-| `OLLAMA_HOST` | `http://localhost:11434` | Ollama host |
+Each notebook follows the same shape: **header** (tier, time, prerequisites, source) → **plain-English concept** → **minimal working example** → **visualization** → **3 exercises** (warm-up / apply / extend, with collapsed solutions) → **key takeaways + what's next**. See [.claude/CLAUDE.md](.claude/CLAUDE.md) for the full spec and content sources.
