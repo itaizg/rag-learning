@@ -747,6 +747,25 @@ wheels = [
 ]
 
 [[package]]
+name = "faiss-cpu"
+version = "1.14.3"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "numpy" },
+    { name = "packaging" },
+]
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/83/b0/48c083d01b7b68c463c1d56507147a9d733f791e1c469a77215a872a9fb5/faiss_cpu-1.14.3-cp310-abi3-macosx_14_0_arm64.whl", hash = "sha256:a9369863290a3f0e033757e4c10577b6ef7431f1cede394dabd0a137e4e2ed45", size = 4768290, upload-time = "2026-06-13T02:19:03.427Z" },
+    { url = "https://files.pythonhosted.org/packages/ab/34/6b04ef5bae3eada6b5a9457d7875cce041c040d53c890815cbd1e9821c65/faiss_cpu-1.14.3-cp310-abi3-macosx_15_0_x86_64.whl", hash = "sha256:f9d0e84d909194f63f027bbd3c1e35e905e48c9345c2db6e6f24da09a6bc5906", size = 6925734, upload-time = "2026-06-13T02:19:05.232Z" },
+    { url = "https://files.pythonhosted.org/packages/7c/8a/b451af4b3c6dd18749ecfb58ccb68503b77e49c9aa4a89d950e9d521e058/faiss_cpu-1.14.3-cp310-abi3-manylinux_2_27_aarch64.manylinux_2_28_aarch64.whl", hash = "sha256:1d734cfa9ac90b6a5dfed3a27cb706d05f22824703dafc3969b4e2071877a31c", size = 9661210, upload-time = "2026-06-13T02:19:06.99Z" },
+    { url = "https://files.pythonhosted.org/packages/a0/ed/57335bc18c9e18677587bec9bf070c675b29c8e683e13f4def0440731ca0/faiss_cpu-1.14.3-cp310-abi3-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl", hash = "sha256:8780b526c06e57aad90a8c4655dfba2ff1b3195bd600ff4499752fc45159c9fc", size = 18506292, upload-time = "2026-06-13T02:19:09.621Z" },
+    { url = "https://files.pythonhosted.org/packages/e7/d3/c6ca8c44a63b909e78aa8a69e14501c79c89613e62261d58455ea603d710/faiss_cpu-1.14.3-cp310-abi3-musllinux_1_2_aarch64.whl", hash = "sha256:b28ba083e8c02f2c9be03783402537fd3f00d27e68799c44bf88931500ee12ec", size = 11238800, upload-time = "2026-06-13T02:19:12.821Z" },
+    { url = "https://files.pythonhosted.org/packages/93/5f/b405692913a301251749cb175cb3f564ed257fdaa80a22c9a36444d0095d/faiss_cpu-1.14.3-cp310-abi3-musllinux_1_2_x86_64.whl", hash = "sha256:cdcb90850cb4b7c27d270839b37bcc0dc8d1fb6a62d1e13053e51ac95061ca25", size = 19237637, upload-time = "2026-06-13T02:19:15.531Z" },
+    { url = "https://files.pythonhosted.org/packages/1d/c1/2fb14f58ff74d7a7d6fd13084c016d9b144ce0bcdf77f6526cc2e4828278/faiss_cpu-1.14.3-cp313-cp313-win_amd64.whl", hash = "sha256:ea2340f675db59af8db6da4535b541ce6948d68a008989c656c292c7b0c77127", size = 16162836, upload-time = "2026-06-13T02:19:25.529Z" },
+    { url = "https://files.pythonhosted.org/packages/fd/aa/100d3b706b8e2aa561e2673ed7d07c4c7c26f92d938a88d193dd54f90c45/faiss_cpu-1.14.3-cp314-cp314-win_amd64.whl", hash = "sha256:54b0ea832be5bce75ef9abf1297fe4613d760bf7cfe7a963da040cb0314e8f58", size = 16444608, upload-time = "2026-06-13T02:19:27.992Z" },
+]
+
+[[package]]
 name = "fastjsonschema"
 version = "2.21.2"
 source = { registry = "https://pypi.org/simple" }
@@ -1321,6 +1340,23 @@ wheels = [
 ]
 
 [[package]]
+name = "jupyter"
+version = "1.1.1"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "ipykernel" },
+    { name = "ipywidgets" },
+    { name = "jupyter-console" },
+    { name = "jupyterlab" },
+    { name = "nbconvert" },
+    { name = "notebook" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/58/f3/af28ea964ab8bc1e472dba2e82627d36d470c51f5cd38c37502eeffaa25e/jupyter-1.1.1.tar.gz", hash = "sha256:d55467bceabdea49d7e3624af7e33d59c37fff53ed3a350e1ac957bed731de7a", size = 5714959, upload-time = "2024-08-30T07:15:48.299Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/38/64/285f20a31679bf547b75602702f7800e74dbabae36ef324f716c02804753/jupyter-1.1.1-py2.py3-none-any.whl", hash = "sha256:7a59533c22af65439b24bbe60373a4e95af8f16ac65a6c00820ad378e3f7cc83", size = 2657, upload-time = "2024-08-30T07:15:47.045Z" },
+]
+
+[[package]]
 name = "jupyter-client"
 version = "8.8.0"
 source = { registry = "https://pypi.org/simple" }
@@ -1334,6 +1370,25 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/05/e4/ba649102a3bc3fbca54e7239fb924fd434c766f855693d86de0b1f2bec81/jupyter_client-8.8.0.tar.gz", hash = "sha256:d556811419a4f2d96c869af34e854e3f059b7cc2d6d01a9cd9c85c267691be3e", size = 348020, upload-time = "2026-01-08T13:55:47.938Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/2d/0b/ceb7694d864abc0a047649aec263878acb9f792e1fec3e676f22dc9015e3/jupyter_client-8.8.0-py3-none-any.whl", hash = "sha256:f93a5b99c5e23a507b773d3a1136bd6e16c67883ccdbd9a829b0bbdb98cd7d7a", size = 107371, upload-time = "2026-01-08T13:55:45.562Z" },
+]
+
+[[package]]
+name = "jupyter-console"
+version = "6.6.3"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "ipykernel" },
+    { name = "ipython" },
+    { name = "jupyter-client" },
+    { name = "jupyter-core" },
+    { name = "prompt-toolkit" },
+    { name = "pygments" },
+    { name = "pyzmq" },
+    { name = "traitlets" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/bd/2d/e2fd31e2fc41c14e2bcb6c976ab732597e907523f6b2420305f9fc7fdbdb/jupyter_console-6.6.3.tar.gz", hash = "sha256:566a4bf31c87adbfadf22cdf846e3069b59a71ed5da71d6ba4d8aaad14a53539", size = 34363, upload-time = "2023-03-06T14:13:31.02Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/ca/77/71d78d58f15c22db16328a476426f7ac4a60d3a5a7ba3b9627ee2f7903d4/jupyter_console-6.6.3-py3-none-any.whl", hash = "sha256:309d33409fcc92ffdad25f0bcdf9a4a9daa61b6f341177570fdac03de5352485", size = 24510, upload-time = "2023-03-06T14:13:28.229Z" },
 ]
 
 [[package]]
@@ -1985,6 +2040,22 @@ source = { registry = "https://pypi.org/simple" }
 sdist = { url = "https://files.pythonhosted.org/packages/6a/51/63fe664f3908c97be9d2e4f1158eb633317598cfa6e1fc14af5383f17512/networkx-3.6.1.tar.gz", hash = "sha256:26b7c357accc0c8cde558ad486283728b65b6a95d85ee1cd66bafab4c8168509", size = 2517025, upload-time = "2025-12-08T17:02:39.908Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/9e/c9/b2622292ea83fbb4ec318f5b9ab867d0a28ab43c5717bb85b0a5f6b3b0a4/networkx-3.6.1-py3-none-any.whl", hash = "sha256:d47fbf302e7d9cbbb9e2555a0d267983d2aa476bac30e90dfbe5669bd57f3762", size = 2068504, upload-time = "2025-12-08T17:02:38.159Z" },
+]
+
+[[package]]
+name = "notebook"
+version = "7.5.7"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "jupyter-server" },
+    { name = "jupyterlab" },
+    { name = "jupyterlab-server" },
+    { name = "notebook-shim" },
+    { name = "tornado" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/3e/c4/f71f8716f2903e9e817a47f534b9fd84831e155e2acb32c26691c8e06243/notebook-7.5.7.tar.gz", hash = "sha256:d6d59288a25303b25e1dcb71e9b017ec3a785f7d92f38b9bc288ca1970d5b0a8", size = 14171612, upload-time = "2026-06-04T18:33:45.224Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/e1/4d/b3347f7073a377273531efe4ffc738fc910e93718fd2838c7ebf6736c6af/notebook-7.5.7-py3-none-any.whl", hash = "sha256:1f95f79d117e47d20b5555b5c85a397d2cfecf136978aaab767cf0314b09165b", size = 14583767, upload-time = "2026-06-04T18:33:40.987Z" },
 ]
 
 [[package]]
@@ -3117,8 +3188,10 @@ dependencies = [
     { name = "anthropic" },
     { name = "chromadb" },
     { name = "datasets" },
+    { name = "faiss-cpu" },
     { name = "ipykernel" },
     { name = "ipywidgets" },
+    { name = "jupyter" },
     { name = "jupyterlab" },
     { name = "matplotlib" },
     { name = "neo4j" },
@@ -3129,10 +3202,16 @@ dependencies = [
     { name = "pandas" },
     { name = "pillow" },
     { name = "plotly" },
+    { name = "python-dotenv" },
     { name = "pyvis" },
     { name = "rank-bm25" },
     { name = "rich" },
+    { name = "scikit-learn" },
     { name = "sentence-transformers" },
+    { name = "tokenizers" },
+    { name = "torch" },
+    { name = "tqdm" },
+    { name = "transformers" },
 ]
 
 [package.metadata]
@@ -3140,8 +3219,10 @@ requires-dist = [
     { name = "anthropic", specifier = ">=0.105.2" },
     { name = "chromadb", specifier = ">=0.5" },
     { name = "datasets", specifier = ">=5.0.0" },
+    { name = "faiss-cpu", specifier = ">=1.8.0" },
     { name = "ipykernel", specifier = ">=7.2.0" },
     { name = "ipywidgets", specifier = ">=8.1.8" },
+    { name = "jupyter", specifier = ">=1.0.0" },
     { name = "jupyterlab", specifier = ">=4" },
     { name = "matplotlib", specifier = ">=3.8" },
     { name = "neo4j", specifier = ">=5" },
@@ -3152,10 +3233,16 @@ requires-dist = [
     { name = "pandas", specifier = ">=3.0.3" },
     { name = "pillow", specifier = ">=12.2.0" },
     { name = "plotly", specifier = ">=6.8.0" },
+    { name = "python-dotenv", specifier = ">=1.0.0" },
     { name = "pyvis", specifier = ">=0.3.2" },
     { name = "rank-bm25", specifier = ">=0.2.2" },
     { name = "rich", specifier = ">=15.0.0" },
+    { name = "scikit-learn", specifier = ">=1.4.0" },
     { name = "sentence-transformers", specifier = ">=3" },
+    { name = "tokenizers", specifier = ">=0.19.0" },
+    { name = "torch", specifier = ">=2.2.0" },
+    { name = "tqdm", specifier = ">=4.66.0" },
+    { name = "transformers", specifier = ">=4.40.0" },
 ]
 
 [[package]]
