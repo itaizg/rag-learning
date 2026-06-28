@@ -217,6 +217,7 @@ These lectures are the academic backbone of the curriculum. Use them as the auth
 - 4 context primitives: Write, Select, Compress, Isolate
 - Source: @sairahul1 — https://x.com/sairahul1/status/2062809249064141017
 
+
 ---
 
 ## API Keys & Environment
@@ -438,7 +439,18 @@ Before generating any notebook, confirm with the user:
 - ✅ **Scaffolding** — tier directories (`00_setup` … `06_projects`), `.env.example`, `requirements.txt`, `environment.yml`, curriculum `README.md`. Existing RAG notebooks moved to `07_rag_learning/`.
 - ✅ **Tier 1 — Foundations (00–06)** — built and executed clean: `00_setup/00_environment_check`, `01_foundations/01_neural_networks` … `06_how_llms_work`.
 - ✅ **Tier 2 — Training (07–11)** — built and executed clean: `02_training/07_pretraining_and_scaling` … `11_speculative_decoding`.
-- ⬜ **Tier 3 (12–17), Tier 4 (18–23), Tier 5 (24–27), Tier 6 (P1–P4)** — not yet built.
+- ✅ **Tier 3 — Building (12–17)** — built and executed clean: `03_building/12_prompt_engineering` … `17_chain_of_thought`. RAG notebooks (14/15/16) reuse `ragkit` and link out to `07_rag_learning/` rather than re-teaching it.
+- ✅ **Tier 4 — Agents (18–23, +19b)** — built and executed clean. Introduces three lenses: **Claude SDK** agents (18/19/19b), **LangGraph** orchestration (20), **LangSmith** tracing (21+). 19 = in-depth raw loop; 19b = ~20-line minimal version (user asked for both). 21 harness, 22 context primitives, 23 six loop patterns.
+- ✅ **Tier 6 capstone — `06_projects/P3_build_agent_from_scratch.ipynb`** — research agent synthesizing all of Tier 4 (raw budgeted loop + LangGraph 5-stage graph + adversarial verify→revise cycle + harness + LangSmith trace), writes a sourced report to disk. Built & executed clean.
+- ⬜ **Tier 5 (24–27), Tier 6 (P1, P2, P4)** — not yet built.
+
+### Tier 3–4 conventions (added this build)
+- **New deps (via `uv add`):** `langgraph`, `langchain-anthropic`, `langsmith`. Added to `imports.sh` (now 15 pkgs). `.env.example` notes `LANGCHAIN_TRACING_V2`.
+- **LangGraph gotcha:** `ChatAnthropic` does NOT auto-resolve the key here — pass `api_key=os.environ["ANTHROPIC_API_KEY"]` explicitly. Build the graph unconditionally (offline-safe); guard only `.invoke()` / node LLM calls. `draw_ascii()` needs `grandalf` (absent) — print `get_graph().nodes/edges` instead. Fan-out needs a reducer: `Annotated[list, operator.add]`.
+- **LangSmith:** guard with `HAS_LANGSMITH`; wrap with `@traceable`; ships traces in a background thread and fails silently, so it never breaks a run. Enable via `LANGSMITH_TRACING=true`.
+- **Live API calls:** key IS present → `notebooks.sh` makes REAL calls. Shared guarded `ask()` helper (`HAS_ANTHROPIC` + try/except → graceful skip string); `TEACH_MODEL = "claude-haiku-4-5-20251001"` for cheap calls (`claude-opus-4-8` = production). Keep prompts tiny, sample counts low (n≈3).
+- **macOS crash guard:** torch + sentence-transformers + faiss can segfault the kernel at shutdown. In embed+faiss notebooks (15) set `KMP_DUPLICATE_LIB_OK=TRUE`, `OMP_NUM_THREADS=1`, `TOKENIZERS_PARALLELISM=false` BEFORE imports + `faiss.omp_set_num_threads(1)`. Don't embed huge batches in-kernel — use NumPy random vectors for scaling demos and keep real `embed()` calls small. P3 avoids torch entirely (mock keyword search).
+- **dotenv gotcha (testing only):** `load_dotenv()` from a `python - <<EOF` heredoc raises `AssertionError` in `find_dotenv()` (empty call stack). Use `load_dotenv("/abs/path/.env")` when smoke-testing from stdin; notebooks/`-c` are unaffected.
 
 ### Decisions confirmed with the user (apply to all remaining tiers)
 1. **API:** **Both side-by-side** — Anthropic (`anthropic`, model `claude-opus-4-8` / latest) as primary, with OpenAI (`openai`) comparison cells where useful. Use the "no-key" guard pattern (see `00_environment_check` §5) so concept cells run without keys.
@@ -454,3 +466,38 @@ Before generating any notebook, confirm with the user:
 - **Plots:** start viz cells with `%matplotlib inline`; every plot gets a title + axis labels + a one-sentence italic caption in the following markdown cell.
 - **Forward references:** link concepts to their notebook number (e.g. "see notebook 14"); don't re-teach earlier material.
 ```
+
+---
+
+## Working in a Loop (do → check → repeat)
+
+Most agents run once and hand back broken work. This repo ships a reusable
+**do, check, repeat until done** skeleton so the loop is the same for any goal —
+only the check changes.
+
+- **The loop command:** `/loop <task>` (`.claude/commands/loop.md`). It establishes
+  what "done" means, does the work, runs the check, and repeats until the check
+  passes or a stop rule fires.
+- **The pluggable checks** live in `.claude/checks/` — point the loop at whichever
+  one matches the goal. Each is a short script that prints PASS/FAIL and exits
+  non-zero on failure:
+  - `notebooks.sh [nb …]` — execute notebook(s) clean (the repo's real "tests green").
+  - `lint.sh` — fast syntax gate over all notebook cells + `ragkit` modules.
+  - `imports.sh` — core stack imports clean (use when fixing the env/deps).
+
+  Swap the check and the bug-fixer becomes an env-fixer; the skeleton never changes.
+  A new goal is a new short script in `.claude/checks/`, not a new agent.
+
+### Loop stop rules
+
+Stop the loop when any of these is true:
+
+- The goal check passes. Stop, report success with the check output.
+- 5 cycles used. Stop, report what's left and what was tried.
+- The check result hasn't improved in two cycles. The agent is
+  stuck. Stop and show me, don't burn cycle 4 and 5 guessing.
+- A cycle makes the check worse than the cycle before. Something
+  is going backwards. Stop and surface it.
+
+Never report success without the check's output from the final cycle.
+Never edit the check itself to make it pass.

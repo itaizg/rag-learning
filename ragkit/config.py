@@ -6,6 +6,14 @@ project-wide default).  Notebooks override this with their own toggle cell.
 """
 import os
 
+# Load .env (repo root) so ANTHROPIC_API_KEY / NEO4J_* / OLLAMA_HOST etc. are
+# available to every notebook that does `import ragkit.config`.
+try:
+    from dotenv import load_dotenv
+    load_dotenv()
+except ImportError:
+    pass
+
 # ── Backend ──────────────────────────────────────────────────────────────────
 # "claude"  → generation via Anthropic API (uses ANTHROPIC_API_KEY)
 # "local"   → generation via Ollama (fully offline, Metal-accelerated on Mac)
@@ -21,6 +29,12 @@ OLLAMA_VISION_MODEL = "llama3.2-vision"
 EMBED_MODEL = "all-MiniLM-L6-v2"               # ~90 MB, fast on MPS
 RERANK_MODEL = "cross-encoder/ms-marco-MiniLM-L-6-v2"
 CLIP_MODEL = "clip-ViT-B-32"                   # for multimodal notebook
+
+# "local"  → MiniLM via sentence-transformers (offline, no key, used above)
+# "voyage" → Voyage AI production embeddings (Anthropic's recommended partner;
+#            requires VOYAGE_API_KEY). Falls back to "local" if unavailable.
+EMBED_BACKEND: str = os.environ.get("EMBED_BACKEND", "local")
+VOYAGE_EMBED_MODEL = "voyage-3-large"          # see also the newer Voyage 4 family
 
 # ── Hardware device detection (MPS > CUDA > CPU) ─────────────────────────────
 def _detect_device() -> str:
