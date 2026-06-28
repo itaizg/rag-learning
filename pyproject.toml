@@ -36,4 +36,5 @@ dependencies = [
     "tqdm>=4.66.0",
     "transformers>=4.40.0",
     "voyageai>=0.4.1",
+    "ipykernel"
 ]
