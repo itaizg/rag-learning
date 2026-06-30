@@ -30,7 +30,7 @@ graph TD
         N08 --> N09[09 RLHF & Alignment] --> N10[10 Quantization] --> N11[11 Speculative Decoding]
     end
     subgraph T3["Tier 3 — Building ✅"]
-        N12[12 Prompt Eng] --> N13[13 Context & KV Cache] --> N14[14 RAG]
+        N12[12 Prompt Eng] --> N13[13 Context & KV Cache] --> N13b[13b vLLM Serving] --> N14[14 RAG]
         N14 --> N15[15 Vector DBs] --> N16[16 RAG vs CAG] --> N17[17 Chain of Thought]
     end
     subgraph T4["Tier 4 — Agents ✅"]
@@ -85,6 +85,7 @@ graph TD
 |---|----------|--------------|
 | 12 | [Prompt Engineering](03_building/12_prompt_engineering.ipynb) | system vs user, delimiters, few-shot, structured output |
 | 13 | [Context Windows & KV Cache](03_building/13_context_windows_and_kv_cache.ipynb) | token budget, O(n²) attention, KV cache, Anthropic prompt caching |
+| 13b | [Serving LLMs at Scale with vLLM](03_building/13b_vllm_inference_serving.ipynb) | KV-cache bottleneck, PagedAttention, fragmentation, continuous batching, OpenAI-compatible server |
 | 14 | [RAG Fundamentals](03_building/14_rag_fundamentals.ipynb) | chunk→embed→retrieve→generate, hallucination vs grounded (reuses `ragkit`) |
 | 15 | [Vector Databases](03_building/15_vector_databases.ipynb) | brute-force vs ANN (FAISS HNSW/IVF), Chroma, Pinecone |
 | 16 | [RAG vs CAG](03_building/16_rag_vs_cag.ipynb) | cold/cacheable vs hot/retrievable, cache hit-rate, cost/latency |
