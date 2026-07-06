@@ -4,7 +4,7 @@
 # before it is considered done (see CLAUDE.md > Technical conventions).
 #
 # Usage:
-#   .claude/checks/notebooks.sh                      # all tier notebooks (00–06)
+#   .claude/checks/notebooks.sh                      # all tier notebooks (00–09)
 #   .claude/checks/notebooks.sh 01_foundations/04_attention_mechanism.ipynb
 set -uo pipefail
 ROOT="$(cd "$(dirname "$0")/../.." && pwd)"
@@ -13,7 +13,7 @@ cd "$ROOT" || exit 1
 if [ "$#" -gt 0 ]; then
   set -- "$@"
 else
-  set -- $(find 0[0-6]_* -name '*.ipynb' -not -path '*/.ipynb_checkpoints/*' | sort)
+  set -- $(find 0[0-9]_* -name '*.ipynb' -not -path '*/.ipynb_checkpoints/*' | sort)
 fi
 
 .venv/bin/python - "$@" <<'PYEOF'

@@ -12,7 +12,7 @@ import ast, sys, pathlib, nbformat
 fail = 0
 
 # 1. Notebook code cells
-for nb_path in sorted(pathlib.Path(".").glob("0[0-6]_*/**/*.ipynb")):
+for nb_path in sorted(pathlib.Path(".").glob("0[0-9]_*/**/*.ipynb")):
     if ".ipynb_checkpoints" in str(nb_path):
         continue
     nb = nbformat.read(str(nb_path), as_version=4)

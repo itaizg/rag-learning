@@ -36,5 +36,9 @@ dependencies = [
     "tqdm>=4.66.0",
     "transformers>=4.40.0",
     "voyageai>=0.4.1",
-    "ipykernel"
+    "ipykernel",
+    "fastapi>=0.139.0",
+    "uvicorn>=0.49.0",
+    "httpx>=0.28.1",
+    "mcp>=1.28.1",
 ]

@@ -64,13 +64,27 @@ ai-learning-notebooks/
 │   ├── 24_llm_evals_fundamentals.ipynb
 │   ├── 25_benchmark_hygiene.ipynb
 │   ├── 26_llm_as_judge.ipynb
-│   └── 27_production_monitoring.ipynb
+│   ├── 27_production_monitoring.ipynb
+│   └── 27b_agent_evals.ipynb
 │
-└── 06_projects/
-    ├── P1_train_llm_from_scratch.ipynb
-    ├── P2_build_rag_pipeline.ipynb
-    ├── P3_build_agent_from_scratch.ipynb
-    └── P4_multi_agent_research_system.ipynb
+├── 06_projects/
+│   ├── P1_train_llm_from_scratch.ipynb
+│   ├── P2_build_rag_pipeline.ipynb
+│   ├── P3_build_agent_from_scratch.ipynb
+│   └── P4_multi_agent_research_system.ipynb
+│
+├── 08_production/
+│   ├── 28_structured_outputs.ipynb
+│   ├── 29_serving_llm_apps.ipynb
+│   ├── 30_security_and_guardrails.ipynb
+│   ├── 31_mcp.ipynb
+│   ├── 32_cost_engineering.ipynb
+│   └── 33_ci_for_ai.ipynb
+│
+└── 09_frontier/
+    ├── 34_computer_use_and_browser_agents.ipynb
+    ├── 35_voice_and_realtime.ipynb
+    └── 36_data_engineering_for_ai.ipynb
 And all the existing notebooks in 07_rag_learning.
 ```
 
@@ -84,9 +98,10 @@ Every notebook MUST follow this exact structure:
 ```
 # [Number]. [Topic Name]
 
-**Tier:** [Foundations / Training / Building / Agents / Evaluation]
+**Tier:** [Foundations / Training / Building / Agents / Evaluation / Production / Frontier]
 **Estimated time:** [X minutes]
 **Prerequisites:** [list notebook numbers]
+**Priority:** [🔴 Crucial / 🟡 Important / 🟢 Nice-to-have] — [one-line why]. *If skipped, revisit when:* [trigger].
 **Source material:** [tweet author + URL this content is drawn from]
 
 ## What You'll Learn
@@ -210,7 +225,7 @@ These lectures are the academic backbone of the curriculum. Use them as the auth
 - Repo: "Train LLM From Scratch" by Fareed Khan — MIT license, builds a 2B parameter model on a single GPU using The Pile dataset
 - Topics: transformer end-to-end in PyTorch, multi-head attention from scratch, training without OOM, text generation
 - Source: @heynavtoor — https://x.com/heynavtoor/status/2056307663634612373
-- **ACTION REQUIRED:** Find the GitHub repo link in the comments of the tweet above and paste it here: `GITHUB_REPO_URL = "___"`
+- `GITHUB_REPO_URL = "https://github.com/FareedKhan-dev/train-llm-from-scratch"` (MIT license, confirmed via GitHub API; found via WebSearch rather than the tweet's comments). Full pipeline: Data → Pretraining → SFT → Reward Model → DPO → PPO → GRPO, all hand-written PyTorch (no `trl`/`peft`/`transformers`). P1 draws on its pretraining/tokenizer/attention structure at a much smaller (~13M param, CPU-scale) size — see P1's own header for the adaptation.
 
 ### AI Engineer Roadmap
 - What AI engineers actually do in 2026: design agent loops, engineer context, write tools, add memory/durability/sandboxing, wire evals and CI regression gates
@@ -442,7 +457,14 @@ Before generating any notebook, confirm with the user:
 - ✅ **Tier 3 — Building (12–17, +13b)** — built and executed clean: `03_building/12_prompt_engineering` … `17_chain_of_thought`. RAG notebooks (14/15/16) reuse `ragkit` and link out to `07_rag_learning/` rather than re-teaching it. **13b `vllm_inference_serving`** added (serving lens after KV cache): PagedAttention as OS paging, fragmentation/utilization sim, continuous vs static batching, OpenAI-compatible `vllm serve`. Fully offline-safe (no GPU/`vllm` install needed — `vllm` requires CUDA/Linux); live OpenAI-client cell guarded by a localhost:8000 `/health` probe (`HAS_VLLM_SERVER`).
 - ✅ **Tier 4 — Agents (18–23, +19b)** — built and executed clean. Introduces three lenses: **Claude SDK** agents (18/19/19b), **LangGraph** orchestration (20), **LangSmith** tracing (21+). 19 = in-depth raw loop; 19b = ~20-line minimal version (user asked for both). 21 harness, 22 context primitives, 23 six loop patterns.
 - ✅ **Tier 6 capstone — `06_projects/P3_build_agent_from_scratch.ipynb`** — research agent synthesizing all of Tier 4 (raw budgeted loop + LangGraph 5-stage graph + adversarial verify→revise cycle + harness + LangSmith trace), writes a sourced report to disk. Built & executed clean.
-- ⬜ **Tier 5 (24–27), Tier 6 (P1, P2, P4)** — not yet built.
+- ✅ **Tier 5 — Evaluation (24–27, +27b)** — built and executed clean: `05_evaluation/24_llm_evals_fundamentals` (golden dataset + exact/rubric/model-graded scorers + pass@k + error taxonomy) … `27_production_monitoring` (LangSmith tracing, cost/latency, drift detection, canary rollout) … `27b_agent_evals` (trajectory scoring, tool-call correctness, mini task suite, cost-per-solved-task, measures the harness +36-point claim directly). Every notebook's header now carries a **Priority** line (🔴/🟡/🟢 + why + when-to-revisit-if-skipped) — see the gap-filling plan for the full rationale.
+- ✅ **Tier 8 — Production & Safety (28–33)** — built and executed clean: `08_production/28_structured_outputs` (tool-forced schema + Pydantic + validate→repair) … `29_serving_llm_apps` (real FastAPI+uvicorn subprocess, SSE streaming, timeout/fallback, concurrency) … `30_security_and_guardrails` (lethal trifecta, live prompt-injection demo against notebook 19's shape, least-privilege/guardrails/sandboxing/human-gate defenses) … `31_mcp` (FastMCP server over stdio + client, wired into an agent loop) … `32_cost_engineering` (model routing, prompt-cache economics, batch API, token budgets) … `33_ci_for_ai` (regression gate reusing nb24's harness, GitHub Actions example, canary rollout — explicitly mapped to this repo's own `.claude/checks/` + `/loop`).
+- ✅ **Tier 9 — Frontier (34–36)** — built and executed clean: `09_frontier/34_computer_use_and_browser_agents` (real vision+tool-use loop clicking through a PIL-rendered mock calculator; accessibility-tree vs. pixel action-space comparison) … `35_voice_and_realtime` (STT→LLM→TTS latency budgeting, real OpenAI TTS/STT round trip, barge-in state machine) … `36_data_engineering_for_ai` (incremental embedding sync, corpus dedup/chunk-QA, synthetic-data generation with notebook-25 contamination scanning, trace-storage schema design).
+- ✅ **Tier 6 — Projects, all four capstones built and executed clean:**
+  - `P1_train_llm_from_scratch` — real GitHub URL found via WebSearch and recorded above. A genuine ~14.3M-param decoder-only transformer (char tokenizer, hand-written causal multi-head attention, transformer blocks, `forward_hidden()` seam) trained 300 steps on MPS (~30s), loss 3.39→0.08, with a clean before/after generation comparison (trained model reproduces corpus phrases; untrained model produces gibberish).
+  - `P2_build_rag_pipeline` — composes existing `ragkit` pieces (no new retrieval code) into one pipeline function, then adds what Tier 3/`07_rag_learning` never had: retrieval evals (hit-rate@k, MRR) against a golden (question → expected source file) set, faithfulness judging (notebook 26's pattern), and a chunk-size regression gate (notebook 33's exact shape). All real metrics: 100% hit-rate, 0.75 MRR, 100% faithfulness on the Helios corpus.
+  - `P4_multi_agent_research_system` — extends P3 into a LangGraph researcher→writer→critic team with a GRAPH-WIDE tool budget, notebook 28 structured output (Pydantic-validated report via forced tool call), notebook 30's `sanitize_tool_output` guardrail against a poisoned mock-KB entry, LangSmith tracing, and a notebook 27b-style eval suite (solve rate, trajectory score, cost-per-solved-task).
+- ✅ **Gap-filling plan — CLOSED.** Every tier from the original audit (Tier 5 evals, Tier 8 production/safety, Tier 9 frontier, Tier 6 capstones) is built, and each notebook plus each tier-batch has been executed clean individually (`tools/run_nb.py` per notebook; `.claude/checks/notebooks.sh <tier>/*.ipynb` per tier — all 52 notebooks passed). `README.md` carries a full priority-labeled triage table for every notebook across every tier (existing tiers 1–4/7 labeled retroactively in the README; new tiers 5/6/8/9 labeled in both their own headers and the README), plus the curriculum map mermaid diagram, "🔴-only fast path" reading order, and a 4th learner profile. **A combined full-repo sweep (`.claude/checks/notebooks.sh` with no args, all 52 in one run) was attempted but deliberately not completed** — Python block-buffers stdout when redirected to a file, so a run gives no visible progress until it finishes or the buffer fills; after ~11 minutes with zero PASS/FAIL lines there was no way to tell "working through slow notebooks" from "hung," and the earlier two silent-death attempts were likely the same blind spot rather than an actual failure. Given every notebook already passed individually, a blind multi-hour combined run (live API calls + model loads × 52) wasn't judged worth it — decided with the user 2026-07-05. If ever revisited: rerun with `PYTHONUNBUFFERED=1`, and note the nohup'd python detaches from the wrapper bash, so kill the underlying `python -` heredoc pid (and any `ipykernel_launcher` children) directly, not just the `notebooks.sh` bash pid. Full plan at `~/.claude/plans/write-a-plan-to-zippy-meerkat.md`.
 
 ### Tier 3–4 conventions (added this build)
 - **New deps (via `uv add`):** `langgraph`, `langchain-anthropic`, `langsmith`. Added to `imports.sh` (now 15 pkgs). `.env.example` notes `LANGCHAIN_TRACING_V2`.
@@ -459,8 +481,35 @@ Before generating any notebook, confirm with the user:
 4. **Scope cadence:** build a tier or two, then check in.
 
 ### Technical conventions (match these in later tiers)
-- **Environment:** repo uses `uv` (Python 3.13); `.venv` was relocated so its console-script shebangs are broken. Run tools as `.venv/bin/python -m <tool>` — **`jupyter`/`nbconvert` CLIs do NOT work directly.** Execute notebooks with the nbclient runner at `/tmp/nbgen/run_nb.py` (or equivalent), not `jupyter nbconvert`.
-- **Notebook generation:** notebooks were built programmatically with `/tmp/nbgen/nbgen.py` (`md()`, `code()`, `write_nb()` — adds cell ids, nbformat 4.5). Every notebook is **executed and verified** before being considered done.
+- **Environment:** repo uses `uv` (Python 3.13); `.venv` was relocated so its console-script shebangs are broken. Run tools as `.venv/bin/python -m <tool>` — **`jupyter`/`nbconvert` CLIs do NOT work directly.** Execute notebooks with `.venv/bin/python tools/run_nb.py <nb...>` (in-repo now, not `/tmp` — survives session/tmp cleanup), not `jupyter nbconvert`.
+- **Notebook generation:** build with `tools/nbgen.py` (`md()`, `code()`, `write_nb()` — adds cell ids, nbformat 4.5), driven by a disposable per-notebook `tools/build_NN.py` script (write it, run it, execute the notebook, delete the build script — only `nbgen.py`/`run_nb.py` persist in-repo). Every notebook is **executed and verified** before being considered done.
+
+### Tier 5 conventions (added this build)
+- **New deps (via `uv add`):** `fastapi`, `uvicorn`, `httpx`, `mcp` (added ahead of Tier 8, harmless to have present now). Added to `imports.sh` (now 19 pkgs). Check globs (`notebooks.sh`, `lint.sh`) extended from `0[0-6]_*`/`0[0-6]_*/**` to `0[0-9]_*` to cover Tiers 5/8/9 as they land.
+- **Eval harness shape (notebook 24), reused verbatim downstream:** golden dataset (list of dicts) → `run_variant(system_prompt)` → one of three scorers (exact-match / rubric / model-graded `judge_score`) → aggregate with `np.mean`. Notebooks 26, 27, 27b, and both P2/P4 capstones lean on this exact shape rather than reinventing it.
+- **Agent-eval shape (notebook 27b):** a task = `{prompt, required_tools, forbidden_tools, answer_check}`; `run_agent()` returns a trajectory (list of tool calls) + final answer + token cost; score with `trajectory_score()` (path quality) and `tool_call_correctness()` (per-call validity) separately — don't conflate them, they catch different failure classes.
+- **Judge calibration gotcha (notebook 26):** an uncalibrated judge is worse than no eval — always correlate judge scores against a small hand-labeled set (target >0.7 correlation) before trusting one in a pipeline.
+
+### Tier 8 conventions (added this build)
+- **Triple-quote nesting trap (bit us twice — notebooks 29 and 31):** `code("""...""")` in a build script cannot contain ANY literal `"""` inside the generated content, even nested inside an inner `'''...'''` string one level down — Python's tokenizer doesn't understand logical nesting, it just scans for the next `"""`. Any generated-source docstrings inside a build script must use `#` comments or a `description=` kwarg instead of a triple-quoted docstring. Check with `python -c "import ast; ast.parse(open('build_NN.py').read())"` before running.
+- **Regex escape gotcha:** `r"[0-9+\\-*/(). ]+"` written inside a *non-raw* outer string (e.g. `SERVER_SOURCE = '''...'''`) triggers a `SyntaxWarning: invalid escape sequence` when that generated code is later parsed as Python — reorder the char class so `-` is first/last (`[0-9+*/(). -]`) instead of escaping it.
+- **ipykernel already runs an event loop:** any notebook using `asyncio` (nb31/MCP) MUST use top-level `await` inside a cell, NOT `asyncio.run()` — the latter raises `RuntimeError: asyncio.run() cannot be called from a running event loop`.
+- **Real subprocess servers (nb29 FastAPI, nb31 MCP):** launch via `subprocess.Popen` + `atexit.register(proc.terminate)` as a safety net, health-probe with a polling loop before making requests, and ALWAYS add an explicit cleanup cell that terminates + waits so `notebooks.sh` doesn't leak processes. Use `find_free_port()` (bind to port 0) rather than a hardcoded port to avoid CI collisions.
+- **MCP tool descriptions:** use `@mcp.tool(description="...")` rather than a function docstring when the server source is being generated from within a build script (avoids the triple-quote trap above); FastMCP accepts either.
+- **Honesty over drama (notebook 30):** the live prompt-injection demo against Claude Haiku often gets RESISTED by the model's own safety training — don't force a fake "attack succeeded" narrative. Report the real live outcome, then use a clearly-labeled deterministic mock (`naive_unsafe_agent_simulator`) to make the underlying mechanism unambiguous regardless of what the live call did. This is more honest AND more convincing than a scripted "gotcha."
+
+### Tier 9 conventions (added this build)
+- **Vision-agent pixel accuracy (notebook 34):** small rendered images (~80px buttons) cause real, non-scripted misclicks from the model's own coordinate estimation — this isn't a bug in the harness, it's an authentic finding about pixel-based computer use being brittle. Fix by enlarging the render (160x120px buttons, `ImageFont.truetype` at 32-36pt) rather than faking a clean result; keep the goal prompt unambiguous ("click X, then Y, then =, stop once the display shows the numeric result") so a correct vision-agent run actually reaches a clean answer.
+- **OPENAI_API_KEY present but out of quota** in this environment (`insufficient_quota` / 429) — the guarded try/except pattern already handles this gracefully (reports `[skipped: RateLimitError...]`), same as a missing key. Don't assume `HAS_OPENAI = bool(env var)` means calls will succeed; the try/except is doing real work, not just decoration.
+- **Synthetic-data contamination check (notebook 36) is genuinely convincing, not staged:** asking Claude to generate "world capitals" Q&A spontaneously reproduced the exact "What is the capital of France?" eval question (ratio=1.00) — a real, unprompted illustration of why notebook 25's contamination scanner matters for synthetic data specifically.
+- **MCP/subprocess/async notebooks:** see Tier 8 conventions above (triple-quote nesting, top-level `await`, subprocess cleanup) — all apply equally here.
+
+### Tier 6 capstone conventions (added this build)
+- **P1 model-size/timing tradeoff:** prototype param count and per-step timing OUTSIDE the notebook first (`d_model=384, n_heads=6, n_layers=8, block_size=192` → 14.3M params, ~103ms/step on MPS, 300 steps ≈ 31s) before committing to a config — avoids discovering a too-slow config only after writing the full notebook.
+- **P1 corpus choice:** use a clearly SYNTHETIC repeated-phrase corpus (proverbs/idioms), not a real copyrighted text reconstructed from memory — avoids both reproduction-accuracy risk and copyright concerns, and still gives a tiny model enough structure to visibly learn (loss 3.39→0.08, coherent phrase completion vs. untrained gibberish).
+- **P2 reuses `ragkit` unmodified** (`load_corpus`, `chunk_text`, `build_collection`, `query_collection`, `generate`) — a capstone's job is composition + evaluation, not reinventing retrieval. `sys.path.insert(0, "..")` from `06_projects/` works the same way it does from `03_building/` (confirmed empirically — nbclient runs with cwd = the notebook's own directory).
+- **P4's graph-wide budget:** track `tool_calls_used` in the LangGraph `TeamState` itself (not inside one node's closure) so the budget check in the routing function (`after_critic`) sees total usage across every node, not just one sub-agent's private counter — this is what makes it a TEAM budget instead of P3's single-agent budget.
+- **P4's injection defense held up as designed:** the poisoned mock-KB entry got redacted at the tool boundary before ever reaching the writer LLM — the report honestly said "sources were redacted, cannot answer" rather than hallucinating, which is the correct and desired outcome of notebook 30's guardrail pattern, not a failure to work around.
 - **Models used (all small, cached, guarded with try/except + offline fallback):** GPT-2 (generation/tokenizer), DistilBERT (attention viz), `all-MiniLM-L6-v2` (embeddings, already cached). HF is reachable in this environment.
 - **Add new deps via `uv add`** (already added: `openai`, `datasets`, `plotly`). `torch`, `transformers`, `sentence-transformers`, `scikit-learn`, `matplotlib`, `anthropic` are present.
 - **Plots:** start viz cells with `%matplotlib inline`; every plot gets a title + axis labels + a one-sentence italic caption in the following markdown cell.
