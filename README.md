@@ -46,8 +46,8 @@ graph TD
         N14 --> N15[15 Vector DBs] --> N16[16 RAG vs CAG] --> N17[17 Chain of Thought]
     end
     subgraph T4["Tier 4 — Agents ✅"]
-        N18[18 What Is an Agent 🔴] --> N19[19 Agent Loop 🔴] --> N20[20 Multi-Agent + LangGraph]
-        N20 --> N21[21 Harness 🔴] --> N22[22 Context Eng 🔴] --> N23[23 Loop Eng 🔴]
+        N18[18 What Is an Agent 🔴] --> N19[19 Agent Loop 🔴] --> N19c[19c Async Patterns 🔴] --> N20[20 Multi-Agent + LangGraph]
+        N20 --> N21[21 Harness 🔴] --> N22[22 Context Eng 🔴] --> N22b[22b Agent Memory] --> N23[23 Loop Eng 🔴]
     end
     subgraph T5["Tier 5 — Evaluation ✅"]
         N24[24 Evals Fundamentals 🔴] --> N25[25 Benchmark Hygiene]
@@ -55,7 +55,7 @@ graph TD
     end
     subgraph T8["Tier 8 — Production & Safety ✅"]
         N28[28 Structured Outputs 🔴] --> N29[29 Serving LLM Apps]
-        N29 --> N30[30 Security & Guardrails 🔴] --> N31[31 MCP] --> N32[32 Cost Eng] --> N33[33 CI for AI]
+        N29 --> N30[30 Security & Guardrails 🔴] --> N30b[30b Human-in-the-Loop] --> N31[31 MCP] --> N32[32 Cost Eng] --> N33[33 CI for AI]
     end
     subgraph T9["Tier 9 — Frontier ✅"]
         N34[34 Computer Use] --> N35[35 Voice & Realtime]
@@ -123,9 +123,11 @@ Use this table to decide a reading path. Full rationale for each label lives in 
 | 18 | [What Is an Agent](04_agents/18_what_is_an_agent.ipynb) | 🔴 | The conceptual foundation for the entire second half of the curriculum | n/a |
 | 19 | [Agent Loop From Scratch](04_agents/19_agent_loop_from_scratch.ipynb) | 🔴 | Every later agent notebook assumes you understand this loop | n/a |
 | 19b | [Agent Loop (Minimal)](04_agents/19b_agent_loop_minimal.ipynb) | 🟢 | A condensed reference version of 19 | When you need a copy-paste starting point |
+| 19c | [Async Patterns for Agents](04_agents/19c_async_agents.ipynb) | 🔴 | The #1 cause of real agent failures under load is blocking code, not a missing feature | n/a — before an agent makes concurrent calls or sits behind an API |
 | 20 | [Multi-Agent Patterns](04_agents/20_multi_agent_patterns.ipynb) | 🟡 | Needed once a single agent isn't enough (ties to P4) | Before building a multi-agent system |
 | 21 | [Harness Engineering](04_agents/21_harness_engineering.ipynb) | 🔴 | "Same model, better harness = +36 points" — the highest-leverage idea here | n/a |
 | 22 | [Context Engineering](04_agents/22_context_engineering.ipynb) | 🔴 | Write/Select/Compress/Isolate are daily agent-engineering vocabulary | n/a |
+| 22b | [Agent Memory Systems](04_agents/22b_agent_memory.ipynb) | 🟡 | Completes 22's in-context primitives with memory that survives past the current process | When an agent needs to remember users across sessions |
 | 23 | [Loop Engineering](04_agents/23_loop_engineering.ipynb) | 🔴 | The shift from prompting to designing systems; underlies 27b and P4 | n/a |
 
 ### Tier 5 — Evaluation & Production (full detail in each header)
@@ -163,6 +165,7 @@ Use this table to decide a reading path. Full rationale for each label lives in 
 | 28 | [Structured Outputs](08_production/28_structured_outputs.ipynb) | 🔴 | Unreliable JSON is the #1 rookie production failure | n/a |
 | 29 | [Serving LLM Apps](08_production/29_serving_llm_apps.ipynb) | 🟡 | The LLM-specific parts (streaming, fallback) are the new material | When you ship your first user-facing endpoint |
 | 30 | [Security & Guardrails](08_production/30_security_and_guardrails.ipynb) | 🔴 | Agents + tools + untrusted content is *the* 2025–26 attack surface | n/a — before ANY agent touches real data/tools |
+| 30b | [Human-in-the-Loop](08_production/30b_human_in_the_loop.ipynb) | 🟡 | Builds out 30's flat approval gate into risk tiers, an audit trail, and pause/resume | Before any tool that can spend money, send messages, or delete data |
 | 31 | [MCP](08_production/31_mcp.ipynb) | 🟡 | The de-facto tool-integration standard, conceptually small once you know 19 | The first time you share tools across agents/hosts |
 | 32 | [Cost Engineering](08_production/32_cost_engineering.ipynb) | 🟡 | Cost is what gets AI features killed in production | The first invoice that makes someone wince |
 | 33 | [CI for AI](08_production/33_ci_for_ai.ipynb) | 🟡 | Turns notebook-24 skills into team-level leverage | When a second person edits your prompts |
@@ -180,7 +183,7 @@ Use this table to decide a reading path. Full rationale for each label lives in 
 
 Short on time? These notebooks alone take you from zero to a working understanding of production agent systems — everything else adds depth or breadth on top:
 
-**04 → 05 → 12 → 13 → 14 → 18 → 19 → 21 → 22 → 23 → 24 → 26 → 27b → 28 → 30 → P4**
+**04 → 05 → 12 → 13 → 14 → 18 → 19 → 19c → 21 → 22 → 23 → 24 → 26 → 27b → 28 → 30 → P4**
 
 ---
 
