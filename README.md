@@ -43,11 +43,11 @@ graph TD
     end
     subgraph T3["Tier 3 — Building ✅"]
         N12[12 Prompt Eng 🔴] --> N13[13 Context & KV Cache 🔴] --> N13b[13b vLLM Serving] --> N14[14 RAG 🔴]
-        N14 --> N15[15 Vector DBs] --> N16[16 RAG vs CAG] --> N17[17 Chain of Thought]
+        N14 --> N15[15 Vector DBs] --> N16[16 RAG vs CAG] --> N16b[16b Deterministic Retrieval 🔴] --> N17[17 Chain of Thought]
     end
     subgraph T4["Tier 4 — Agents ✅"]
         N18[18 What Is an Agent 🔴] --> N19[19 Agent Loop 🔴] --> N19c[19c Async Patterns 🔴] --> N20[20 Multi-Agent + LangGraph]
-        N20 --> N21[21 Harness 🔴] --> N22[22 Context Eng 🔴] --> N22b[22b Agent Memory] --> N23[23 Loop Eng 🔴]
+        N20 --> N21[21 Harness 🔴] --> N22[22 Context Eng 🔴] --> N22b[22b Agent Memory] --> N22c[22c Memory Lifecycle] --> N23[23 Loop Eng 🔴]
     end
     subgraph T5["Tier 5 — Evaluation ✅"]
         N24[24 Evals Fundamentals 🔴] --> N25[25 Benchmark Hygiene]
@@ -55,7 +55,7 @@ graph TD
     end
     subgraph T8["Tier 8 — Production & Safety ✅"]
         N28[28 Structured Outputs 🔴] --> N29[29 Serving LLM Apps]
-        N29 --> N30[30 Security & Guardrails 🔴] --> N30b[30b Human-in-the-Loop] --> N31[31 MCP] --> N32[32 Cost Eng] --> N33[33 CI for AI]
+        N29 --> N30[30 Security & Guardrails 🔴] --> N30b[30b Human-in-the-Loop] --> N30c[30c Capability Security 🔴] --> N31[31 MCP] --> N32[32 Cost Eng] --> N32b[32b Content-Addressed Cache] --> N33[33 CI for AI]
     end
     subgraph T9["Tier 9 — Frontier ✅"]
         N34[34 Computer Use] --> N35[35 Voice & Realtime]
@@ -115,6 +115,7 @@ Use this table to decide a reading path. Full rationale for each label lives in 
 | 14 | [RAG Fundamentals](03_building/14_rag_fundamentals.ipynb) | 🔴 | One of the most common production LLM patterns | n/a |
 | 15 | [Vector Databases](03_building/15_vector_databases.ipynb) | 🟡 | Needed once RAG scales past a toy corpus | Before your first production-scale RAG corpus |
 | 16 | [RAG vs CAG](03_building/16_rag_vs_cag.ipynb) | 🟡 | Caching strategy matters at scale (ties to notebook 32) | Before a cost/latency pass on a RAG system |
+| 16b | [Deterministic Retrieval](03_building/16b_deterministic_retrieval.ipynb) | 🔴 | Exact-structure queries (symbols, IDs, lines) don't need an embedding — a dict/bisect index beats vector search on speed, cost, and correctness | n/a — before building RAG over code or structured data |
 | 17 | [Chain of Thought](03_building/17_chain_of_thought.ipynb) | 🟡 | A common prompting lever, before reaching for a reasoning model | When a task needs more reliable multi-step reasoning |
 
 ### Tier 4 — Agent Engineering
@@ -128,6 +129,7 @@ Use this table to decide a reading path. Full rationale for each label lives in 
 | 21 | [Harness Engineering](04_agents/21_harness_engineering.ipynb) | 🔴 | "Same model, better harness = +36 points" — the highest-leverage idea here | n/a |
 | 22 | [Context Engineering](04_agents/22_context_engineering.ipynb) | 🔴 | Write/Select/Compress/Isolate are daily agent-engineering vocabulary | n/a |
 | 22b | [Agent Memory Systems](04_agents/22b_agent_memory.ipynb) | 🟡 | Completes 22's in-context primitives with memory that survives past the current process | When an agent needs to remember users across sessions |
+| 22c | [Memory Lifecycle & Extraction](04_agents/22c_memory_lifecycle_and_extraction.ipynb) | 🟡 | Adds hotness/decay/eviction and session→typed-memory extraction to 22b, plus a recall eval — the difference between a memory system and a junk drawer | When the memory store grows unbounded or stale facts crowd out relevant ones |
 | 23 | [Loop Engineering](04_agents/23_loop_engineering.ipynb) | 🔴 | The shift from prompting to designing systems; underlies 27b and P4 | n/a |
 
 ### Tier 5 — Evaluation & Production (full detail in each header)
@@ -158,6 +160,7 @@ Use this table to decide a reading path. Full rationale for each label lives in 
 | 05 | [Hybrid RAG](07_rag_learning/05_hybrid_rag.ipynb) | 🟢 | Combines keyword + vector search — good pattern breadth | When pure vector search misses exact-match queries (IDs, part numbers) |
 | 06 | [Agentic RAG Router](07_rag_learning/06_agentic_rag_router.ipynb) | 🟢 | Routing-logic breadth | When a single retrieval strategy doesn't fit all query types |
 | 07 | [Agent + RAG, Multi-Agent](07_rag_learning/07_agent_rag_multi_agent.ipynb) | 🟢 | Combines agents + RAG; a good bridge into Tier 4 | Before P4 |
+| 08 | [Hierarchical & Tiered Retrieval](07_rag_learning/08_hierarchical_and_tiered_retrieval.ipynb) | 🟡 | Recursive directory retrieval + tiered (L0/L1/L2) rendering — how production context DBs cut token use without losing recall | When flat top-k wastes context budget on near-duplicate chunks |
 
 ### Tier 8 — Production & Safety (full detail in each header)
 | # | Notebook | Priority | Why | Revisit if skipped |
@@ -166,8 +169,10 @@ Use this table to decide a reading path. Full rationale for each label lives in 
 | 29 | [Serving LLM Apps](08_production/29_serving_llm_apps.ipynb) | 🟡 | The LLM-specific parts (streaming, fallback) are the new material | When you ship your first user-facing endpoint |
 | 30 | [Security & Guardrails](08_production/30_security_and_guardrails.ipynb) | 🔴 | Agents + tools + untrusted content is *the* 2025–26 attack surface | n/a — before ANY agent touches real data/tools |
 | 30b | [Human-in-the-Loop](08_production/30b_human_in_the_loop.ipynb) | 🟡 | Builds out 30's flat approval gate into risk tiers, an audit trail, and pause/resume | Before any tool that can spend money, send messages, or delete data |
+| 30c | [Capability-Based Agent Security](08_production/30c_capability_based_agent_security.ipynb) | 🔴 | Makes dangerous actions *structurally impossible* (signed capability tokens, attenuation, leases) — the layer that holds when a prompt injection defeats 30's behavioural defenses | n/a — before any agent can delete, spend, push, or send |
 | 31 | [MCP](08_production/31_mcp.ipynb) | 🟡 | The de-facto tool-integration standard, conceptually small once you know 19 | The first time you share tools across agents/hosts |
 | 32 | [Cost Engineering](08_production/32_cost_engineering.ipynb) | 🟡 | Cost is what gets AI features killed in production | The first invoice that makes someone wince |
+| 32b | [Content-Addressed Caching](08_production/32b_content_addressed_caching.ipynb) | 🟢 | Hash-keyed result caching + Bloom-filter gate + leased verify-before-count workers — makes warm runs nearly free | When an agent recomputes identical parsing/embedding/analysis work |
 | 33 | [CI for AI](08_production/33_ci_for_ai.ipynb) | 🟡 | Turns notebook-24 skills into team-level leverage | When a second person edits your prompts |
 
 ### Tier 9 — Frontier & the Data-Engineer Edge (full detail in each header)
@@ -183,7 +188,7 @@ Use this table to decide a reading path. Full rationale for each label lives in 
 
 Short on time? These notebooks alone take you from zero to a working understanding of production agent systems — everything else adds depth or breadth on top:
 
-**04 → 05 → 12 → 13 → 14 → 18 → 19 → 19c → 21 → 22 → 23 → 24 → 26 → 27b → 28 → 30 → P4**
+**04 → 05 → 12 → 13 → 14 → 16b → 18 → 19 → 19c → 21 → 22 → 23 → 24 → 26 → 27b → 28 → 30 → 30c → P4**
 
 ---
 
