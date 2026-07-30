@@ -10,7 +10,7 @@ Tier 2  Training             how models are trained & aligned   (07–11)    ✅
 Tier 3  Building with LLMs   RAG, caching, inference             (12–17)   ✅
 Tier 4  Agent Engineering    systems that use LLMs              (18–23)    ✅
 Tier 5  Evaluation & Prod    measuring AI systems                (24–27b)  ✅
-Tier 6  Projects             capstones (train/RAG/agents)        (P1–P4)   ✅
+Tier 6  Projects             capstones (train/RAG/agents/infra)  (P1–P5)   ✅
 Tier 7  RAG Design Patterns  the original rag_learning series    (00–07)   ✅
 Tier 8  Production & Safety  serving, security, cost, CI         (28–33)   ✅
 Tier 9  Frontier             computer use, voice, data eng       (34–36)   ✅
@@ -66,6 +66,7 @@ graph TD
         P2[P2 RAG Pipeline]
         P3[P3 Research Agent]
         P4[P4 Multi-Agent System 🔴]
+        P5[P5 Optimized Inference Service]
     end
     N06 --> N07
     N11 --> N12
@@ -78,6 +79,10 @@ graph TD
     N23 --> P3
     N30 --> P4
     N27b --> P4
+    N13d --> P5
+    N10b --> P5
+    N29b --> P5
+    N32c --> P5
 ```
 
 ---
@@ -151,6 +156,7 @@ Use this table to decide a reading path. Full rationale for each label lives in 
 | P2 | [Build a RAG Pipeline](06_projects/P2_build_rag_pipeline.ipynb) | 🟡 | Consolidates Tier 3/7 RAG skills WITH evals — the production checklist | Before your first production RAG system |
 | P3 | [Build a Research Agent](06_projects/P3_build_agent_from_scratch.ipynb) | 🟡 | First capstone synthesis of Tier 4 — worth doing before P4's larger system | Before attempting P4 |
 | P4 | [Multi-Agent Research System](06_projects/P4_multi_agent_research_system.ipynb) | 🔴 | The proof-of-mastery artifact — everything before it prepares for this | n/a — the end goal |
+| P5 | [Optimized Inference Service](06_projects/P5_optimized_inference_service.ipynb) | 🟡 | Composes prefix caching, admission control, quantization, and cost/quality routing onto one benchmarked service — proof these levers compound, not just work in isolation | Before publishing an inference optimization benchmark, or justifying a serving-infra roadmap |
 
 ### Tier 7 — RAG Design Patterns (pre-existing)
 | # | Notebook | Priority | Why | Revisit if skipped |
@@ -189,6 +195,12 @@ Use this table to decide a reading path. Full rationale for each label lives in 
 | 35 | [Voice & Realtime](09_frontier/35_voice_and_realtime.ipynb) | 🟢 | Valuable breadth, orthogonal to the core agent/eval stack | When a product needs voice in/out |
 | 36 | [Data Engineering for AI](09_frontier/36_data_engineering_for_ai.ipynb) | 🟡 | The Data-Engineer × AI intersection — your unfair advantage | Before building any RAG corpus at scale |
 | 37 | [Edge Deployment](09_frontier/37_edge_deployment.ipynb) | 🟢 | ONNX/quantization/TensorRT-LLM/WebLLM — the map for when inference needs to run off a GPU server entirely | When a privacy or cost constraint rules out sending data to any server |
+
+---
+
+## Further reading
+
+**[docs/inference_reading_list.md](docs/inference_reading_list.md)** — the papers behind the inference-optimization notebooks (10b, 11, 13, 13b–13d), plus a few (FlashAttention, DistServe, Splitwise) that underlie those mechanisms without a dedicated notebook, each with a verified link, a "what to take from it" paragraph, and a "how to read an inference paper" guide at the end.
 
 ---
 
