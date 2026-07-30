@@ -39,10 +39,10 @@ graph TD
     end
     subgraph T2["Tier 2 — Training ✅"]
         N07[07 Pretraining & Scaling] --> N08[08 Fine-tuning & LoRA]
-        N08 --> N09[09 RLHF & Alignment] --> N10[10 Quantization] --> N11[11 Speculative Decoding]
+        N08 --> N09[09 RLHF & Alignment] --> N10[10 Quantization] --> N10b[10b Quantization in Practice] --> N11[11 Speculative Decoding]
     end
     subgraph T3["Tier 3 — Building ✅"]
-        N12[12 Prompt Eng 🔴] --> N13[13 Context & KV Cache 🔴] --> N13b[13b vLLM Serving] --> N14[14 RAG 🔴]
+        N12[12 Prompt Eng 🔴] --> N13[13 Context & KV Cache 🔴] --> N13b[13b vLLM Serving] --> N13c[13c KV Cache Eviction] --> N13d[13d SGLang & Scheduling] --> N14[14 RAG 🔴]
         N14 --> N15[15 Vector DBs] --> N16[16 RAG vs CAG] --> N16b[16b Deterministic Retrieval 🔴] --> N17[17 Chain of Thought]
     end
     subgraph T4["Tier 4 — Agents ✅"]
@@ -104,6 +104,7 @@ Use this table to decide a reading path. Full rationale for each label lives in 
 | 08 | [Fine-tuning & LoRA](02_training/08_fine_tuning_and_lora.ipynb) | 🟡 | LoRA/QLoRA are common practical skills | Before your first fine-tuning task |
 | 09 | [RLHF & Alignment](02_training/09_rlhf_and_alignment.ipynb) | 🟢 | Valuable depth (DPO/PPO), usually a research-team concern day-to-day | Before an alignment-focused role/interview |
 | 10 | [Quantization](02_training/10_quantization.ipynb) | 🟢 | Matters specifically for self-hosting/edge deployment | Before deploying on constrained hardware |
+| 10b | [Quantization in Practice: AWQ, GPTQ, FP8, GGUF](02_training/10b_quantization_in_practice.ipynb) | 🟡 | Which quantized checkpoint to actually pull for your serving stack | When a model card offers `-AWQ`/`-GPTQ`/`-FP8`/`.gguf` variants and you need to pick one |
 | 11 | [Speculative Decoding](02_training/11_speculative_decoding.ipynb) | 🟢 | Inference-optimization depth, usually owned by an infra team | Before an inference-serving role, or notebook 13b |
 
 ### Tier 3 — Building with LLMs
@@ -112,6 +113,8 @@ Use this table to decide a reading path. Full rationale for each label lives in 
 | 12 | [Prompt Engineering](03_building/12_prompt_engineering.ipynb) | 🔴 | The most-used daily skill in this entire curriculum | n/a |
 | 13 | [Context Windows & KV Cache](03_building/13_context_windows_and_kv_cache.ipynb) | 🔴 | Context budgeting/caching costs affect every production feature (ties to 32) | n/a |
 | 13b | [vLLM Inference Serving](03_building/13b_vllm_inference_serving.ipynb) | 🟡 | Self-hosting depth; skip if you only use hosted APIs | Before standing up a self-hosted inference server |
+| 13c | [KV Cache Eviction](03_building/13c_kv_cache_eviction.ipynb) | 🟡 | Paging (13b) manages memory fragmentation, not unbounded growth — long sessions still run out | Before a long-running chat or agent session that outgrows its KV budget |
+| 13d | [SGLang & Request Scheduling](03_building/13d_sglang_and_request_scheduling.ipynb) | 🟡 | Cross-request prefix reuse (RadixAttention) and admission-control policy are what separate a demo server from a production one | When an agentic/few-shot workload repeats the same system prompt across many calls, or a queue is starving requests |
 | 14 | [RAG Fundamentals](03_building/14_rag_fundamentals.ipynb) | 🔴 | One of the most common production LLM patterns | n/a |
 | 15 | [Vector Databases](03_building/15_vector_databases.ipynb) | 🟡 | Needed once RAG scales past a toy corpus | Before your first production-scale RAG corpus |
 | 16 | [RAG vs CAG](03_building/16_rag_vs_cag.ipynb) | 🟡 | Caching strategy matters at scale (ties to notebook 32) | Before a cost/latency pass on a RAG system |
