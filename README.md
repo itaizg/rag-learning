@@ -54,8 +54,8 @@ graph TD
         N25 --> N26[26 LLM-as-Judge 🔴] --> N27[27 Prod Monitoring] --> N27b[27b Agent Evals 🔴]
     end
     subgraph T8["Tier 8 — Production & Safety ✅"]
-        N28[28 Structured Outputs 🔴] --> N29[29 Serving LLM Apps]
-        N29 --> N30[30 Security & Guardrails 🔴] --> N30b[30b Human-in-the-Loop] --> N30c[30c Capability Security 🔴] --> N31[31 MCP] --> N32[32 Cost Eng] --> N32b[32b Content-Addressed Cache] --> N33[33 CI for AI]
+        N28[28 Structured Outputs 🔴] --> N29[29 Serving LLM Apps] --> N29b[29b Load Testing] --> N29c[29c Inference Observability] --> N29d[29d K8s for AI Workloads]
+        N29d --> N30[30 Security & Guardrails 🔴] --> N30b[30b Human-in-the-Loop] --> N30c[30c Capability Security 🔴] --> N31[31 MCP] --> N32[32 Cost Eng] --> N32b[32b Content-Addressed Cache] --> N33[33 CI for AI]
     end
     subgraph T9["Tier 9 — Frontier ✅"]
         N34[34 Computer Use] --> N35[35 Voice & Realtime]
@@ -170,6 +170,9 @@ Use this table to decide a reading path. Full rationale for each label lives in 
 |---|----------|:---:|-----|---------------------|
 | 28 | [Structured Outputs](08_production/28_structured_outputs.ipynb) | 🔴 | Unreliable JSON is the #1 rookie production failure | n/a |
 | 29 | [Serving LLM Apps](08_production/29_serving_llm_apps.ipynb) | 🟡 | The LLM-specific parts (streaming, fallback) are the new material | When you ship your first user-facing endpoint |
+| 29b | [Load Testing Inference](08_production/29b_load_testing_inference.ipynb) | 🟡 | The gap between "doesn't block" and "survives real concurrent traffic" is exactly what load testing measures | Before a launch that will actually get concurrent traffic |
+| 29c | [Inference Observability](08_production/29c_inference_observability.ipynb) | 🟡 | The infra layer underneath 27's quality monitoring — Prometheus/Grafana, not eval scores | Before you need a dashboard your on-call can page off of |
+| 29d | [Kubernetes for AI Workloads](08_production/29d_kubernetes_for_ai_workloads.ipynb) | 🟢 | Usually a platform team's job, but worth understanding once you're paged when autoscaling doesn't work | When deciding what metric an inference autoscaler should watch |
 | 30 | [Security & Guardrails](08_production/30_security_and_guardrails.ipynb) | 🔴 | Agents + tools + untrusted content is *the* 2025–26 attack surface | n/a — before ANY agent touches real data/tools |
 | 30b | [Human-in-the-Loop](08_production/30b_human_in_the_loop.ipynb) | 🟡 | Builds out 30's flat approval gate into risk tiers, an audit trail, and pause/resume | Before any tool that can spend money, send messages, or delete data |
 | 30c | [Capability-Based Agent Security](08_production/30c_capability_based_agent_security.ipynb) | 🔴 | Makes dangerous actions *structurally impossible* (signed capability tokens, attenuation, leases) — the layer that holds when a prompt injection defeats 30's behavioural defenses | n/a — before any agent can delete, spend, push, or send |

@@ -13,7 +13,7 @@ mods = [
     "numpy", "pandas", "matplotlib", "plotly", "datasets",
     "anthropic", "openai", "dotenv",
     "langgraph", "langchain_anthropic", "langsmith",
-    "fastapi", "uvicorn", "httpx", "mcp",
+    "fastapi", "uvicorn", "httpx", "mcp", "prometheus_client",
 ]
 fail = 0
 for m in mods:
