@@ -55,11 +55,11 @@ graph TD
     end
     subgraph T8["Tier 8 — Production & Safety ✅"]
         N28[28 Structured Outputs 🔴] --> N29[29 Serving LLM Apps] --> N29b[29b Load Testing] --> N29c[29c Inference Observability] --> N29d[29d K8s for AI Workloads]
-        N29d --> N30[30 Security & Guardrails 🔴] --> N30b[30b Human-in-the-Loop] --> N30c[30c Capability Security 🔴] --> N31[31 MCP] --> N32[32 Cost Eng] --> N32b[32b Content-Addressed Cache] --> N33[33 CI for AI]
+        N29d --> N30[30 Security & Guardrails 🔴] --> N30b[30b Human-in-the-Loop] --> N30c[30c Capability Security 🔴] --> N31[31 MCP] --> N32[32 Cost Eng] --> N32b[32b Content-Addressed Cache] --> N32c[32c Gateway Routing & Unit Economics] --> N33[33 CI for AI]
     end
     subgraph T9["Tier 9 — Frontier ✅"]
         N34[34 Computer Use] --> N35[35 Voice & Realtime]
-        N35 --> N36[36 Data Eng for AI]
+        N35 --> N36[36 Data Eng for AI] --> N37[37 Edge Deployment]
     end
     subgraph T6["Tier 6 — Projects ✅"]
         P1[P1 Train LLM From Scratch]
@@ -179,6 +179,7 @@ Use this table to decide a reading path. Full rationale for each label lives in 
 | 31 | [MCP](08_production/31_mcp.ipynb) | 🟡 | The de-facto tool-integration standard, conceptually small once you know 19 | The first time you share tools across agents/hosts |
 | 32 | [Cost Engineering](08_production/32_cost_engineering.ipynb) | 🟡 | Cost is what gets AI features killed in production | The first invoice that makes someone wince |
 | 32b | [Content-Addressed Caching](08_production/32b_content_addressed_caching.ipynb) | 🟢 | Hash-keyed result caching + Bloom-filter gate + leased verify-before-count workers — makes warm runs nearly free | When an agent recomputes identical parsing/embedding/analysis work |
+| 32c | [Gateway Routing & Unit Economics](08_production/32c_gateway_routing_and_unit_economics.ipynb) | 🟡 | Where "our AI feature costs money" becomes "our AI feature has a P&L" — unit economics, a real cost/latency/quality router, and LiteLLM/LM Studio as the off-the-shelf version | When asked what a feature costs per user, or choosing between a hand-rolled router and LiteLLM |
 | 33 | [CI for AI](08_production/33_ci_for_ai.ipynb) | 🟡 | Turns notebook-24 skills into team-level leverage | When a second person edits your prompts |
 
 ### Tier 9 — Frontier & the Data-Engineer Edge (full detail in each header)
@@ -187,6 +188,7 @@ Use this table to decide a reading path. Full rationale for each label lives in 
 | 34 | [Computer Use & Browser Agents](09_frontier/34_computer_use_and_browser_agents.ipynb) | 🟢 | Niche unless your product automates GUIs | When a task needs automating software with no API |
 | 35 | [Voice & Realtime](09_frontier/35_voice_and_realtime.ipynb) | 🟢 | Valuable breadth, orthogonal to the core agent/eval stack | When a product needs voice in/out |
 | 36 | [Data Engineering for AI](09_frontier/36_data_engineering_for_ai.ipynb) | 🟡 | The Data-Engineer × AI intersection — your unfair advantage | Before building any RAG corpus at scale |
+| 37 | [Edge Deployment](09_frontier/37_edge_deployment.ipynb) | 🟢 | ONNX/quantization/TensorRT-LLM/WebLLM — the map for when inference needs to run off a GPU server entirely | When a privacy or cost constraint rules out sending data to any server |
 
 ---
 

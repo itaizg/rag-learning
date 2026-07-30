@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>WebLLM minimal chat demo</title>
+<style>
+  body { font-family: system-ui, sans-serif; max-width: 700px; margin: 40px auto; padding: 0 16px; }
+  #log { white-space: pre-wrap; border: 1px solid #ccc; border-radius: 8px; padding: 12px; min-height: 200px; margin-bottom: 12px; }
+  #status { color: #666; font-size: 0.9em; margin-bottom: 12px; }
+  input { width: 75%; padding: 8px; }
+  button { padding: 8px 16px; }
+</style>
+</head>
+<body>
+<h2>WebLLM: in-browser inference demo</h2>
+<p id="status">Loading engine and model weights (first load downloads ~1GB+ and caches it)...</p>
+<div id="log"></div>
+<input id="prompt" type="text" placeholder="Ask something..." disabled>
+<button id="send" disabled>Send</button>
+
+<script type="module">
+  // CDN import -- no build step, no npm install required to just try this.
+  import * as webllm from "https://esm.run/@mlc-ai/web-llm";
+
+  const statusEl = document.getElementById("status");
+  const logEl = document.getElementById("log");
+  const promptEl = document.getElementById("prompt");
+  const sendBtn = document.getElementById("send");
+
+  const MODEL_ID = "Llama-3.2-1B-Instruct-q4f16_1-MLC";  // small model: faster first load
+
+  const engine = await webllm.CreateMLCEngine(MODEL_ID, {
+    initProgressCallback: (report) => { statusEl.textContent = report.text; },
+  });
+
+  statusEl.textContent = "Ready. Model is running entirely in this browser tab -- no server involved.";
+  promptEl.disabled = false;
+  sendBtn.disabled = false;
+
+  async function send() {
+    const userText = promptEl.value;
+    if (!userText) return;
+    logEl.textContent += `
+You: ${userText}
+`;
+    promptEl.value = "";
+
+    // Same OpenAI-compatible call shape as a cloud API -- only the backend differs.
+    const reply = await engine.chat.completions.create({
+      messages: [{ role: "user", content: userText }],
+    });
+    logEl.textContent += `Model: ${reply.choices[0].message.content}
+`;
+  }
+
+  sendBtn.addEventListener("click", send);
+  promptEl.addEventListener("keydown", (e) => { if (e.key === "Enter") send(); });
+</script>
+</body>
+</html>
