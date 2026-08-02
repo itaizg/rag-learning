@@ -5,16 +5,15 @@ deciding what an agent's change may do next.
 Taught in 05_evaluation's agent-eval-gates notebook; builds on `contracts.py`
 (schema validation feeds `verdict_to_action`'s BLOCK_EDGE path) and on the
 trajectory/tool-call scorers from the agent-evals notebook (feed `Evidence`).
-
 Judge calls are never made here — `JudgeConfig.call_fn` is injected by the
-caller, the same way ragkit's embed functions are injected into agentkit's
-other modules. This module has no anthropic/openai import.
+caller, the same way ragkit's embed functions are injected elsewhere in
+agentkit, so this module has no anthropic/openai import.
 """
 
 from __future__ import annotations
 
 import re
-from dataclasses import dataclass, field
+from dataclasses import dataclass, field, replace
 from enum import Enum
 from typing import Callable
 
@@ -32,9 +31,9 @@ class EvidenceSource(Enum):
     MODEL_SELF_REPORT = "model_self_report"
 
 
-# Priority order, as data: deterministic checks outweigh trajectory evals,
-# which outweigh rollback history, which outweighs the model grading itself —
-# the one input the model can influence, so it gets the least weight.
+# Priority order, as data: deterministic checks outweigh trajectory evals, which
+# outweigh rollback history, which outweighs the model grading itself — the one
+# input the model can influence, so it gets the least weight.
 EVIDENCE_WEIGHTS: dict[EvidenceSource, float] = {
     EvidenceSource.DETERMINISTIC_CHECK: 1.0,
     EvidenceSource.EVAL_TRAJECTORY: 0.6,
@@ -152,7 +151,11 @@ class GateDecision:
 
 @dataclass
 class MergeGate:
-    policies: dict[BlastRadius, LanePolicy] = field(default_factory=lambda: dict(DEFAULT_LANES))
+    # replace() clones each LanePolicy — a plain dict() copy would leave every gate
+    # sharing DEFAULT_LANES' mutable objects, so raising one gate's evidence_floor
+    # would silently raise it everywhere, including for gates built later.
+    policies: dict[BlastRadius, LanePolicy] = field(
+        default_factory=lambda: {k: replace(v) for k, v in DEFAULT_LANES.items()})
     shadow_mode: bool = True
     decisions: list[GateDecision] = field(default_factory=list)
 
@@ -183,9 +186,14 @@ class MergeGate:
 
     def disagreement_rate(self, human_calls: list[bool]) -> float:
         """Fraction of logged shadow decisions where the gate's `opened` call
-        differs from a human reviewer's call on the same change."""
-        paired = list(zip(self.decisions, human_calls))
-        if not paired:
+        differs from a human reviewer's call on the same change. Refuses a
+        partial comparison — a truncated zip would report a reassuring rate
+        computed over only the decisions that happened to line up.
+        """
+        if len(human_calls) != len(self.decisions):
+            raise ValueError(f"expected one human call per logged decision: got "
+                             f"{len(human_calls)} calls for {len(self.decisions)} decisions")
+        if not self.decisions:
             return 0.0
-        disagreements = sum(1 for d, human in paired if d.opened != human)
-        return disagreements / len(paired)
+        disagreements = sum(1 for d, human in zip(self.decisions, human_calls) if d.opened != human)
+        return disagreements / len(self.decisions)
