@@ -14,7 +14,7 @@ Tier 6  Projects             capstones (train/RAG/agents)        (P1–P4)   ✅
 Tier 7  RAG Design Patterns  the original rag_learning series    (00–07)   ✅
 Tier 8  Production & Safety  serving, security, cost, CI         (28–33)   ✅
 Tier 9  Frontier             computer use, voice, data eng       (34–36)   ✅
-Tier 10 Classic ML           the ML substrate under the LLM stack (37–42)  🚧 planned
+Tier 10 Classic ML           the ML substrate under the LLM stack (37–42)  ✅
 ```
 
 ---
@@ -68,6 +68,11 @@ graph TD
         P3[P3 Research Agent]
         P4[P4 Multi-Agent System 🔴]
     end
+    subgraph T10["Tier 10 — Classic ML ✅"]
+        N37[37 ML Foundations 🔴] --> N38[38 Optimization 🔴] --> N39[39 Trees & Boosting 🔴]
+        N39 --> N40[40 scikit-learn Way] --> N41[41 Interpretability & SHAP] --> N42[42 Spark & Distributed Data]
+    end
+    N37 -.optional prefix.-> N01
     N06 --> N07
     N11 --> N12
     N17 --> N18
@@ -190,17 +195,17 @@ Use this table to decide a reading path. Full rationale for each label lives in 
 | 35 | [Voice & Realtime](09_frontier/35_voice_and_realtime.ipynb) | 🟢 | Valuable breadth, orthogonal to the core agent/eval stack | When a product needs voice in/out |
 | 36 | [Data Engineering for AI](09_frontier/36_data_engineering_for_ai.ipynb) | 🟡 | The Data-Engineer × AI intersection — your unfair advantage | Before building any RAG corpus at scale |
 
-### Tier 10 — Classic ML 🚧 (planned — see [10_classic_ml/README.md](10_classic_ml/README.md))
+### Tier 10 — Classic ML (the ML substrate under the LLM stack)
 | # | Notebook | Priority | Why | Revisit if skipped |
 |---|----------|:---:|-----|---------------------|
-| 37 | ML Foundations — the folk wisdom (Domingos 2012) | 🔴 | Generalization, overfitting, bias/variance — the vocabulary every later eval notebook assumes | n/a |
-| 38 | Optimization: backprop tricks → Adam (LeCun 1998, Kingma & Ba 2014) | 🔴 | Adam is *the* LLM optimizer; its 2x-params state is what 07b's ZeRO shards | n/a |
-| 39 | Trees, forests & boosting (Breiman 2001, XGBoost 2016) | 🔴 | Still the right tool for tabular data — knowing when NOT to use an LLM | n/a |
-| 40 | The scikit-learn way (Pedregosa 2011) | 🟡 | Pipelines as leakage prevention — notebook 25's split discipline, enforced in code | Before your first sklearn project |
-| 41 | Model interpretability & SHAP (Lundberg & Lee 2017) | 🟡 | Principled attribution — and why attention weights aren't it | When someone asks "why did the model predict that?" |
-| 42 | Spark & distributed data (Zaharia 2010) | 🟢 | The in-memory-iteration idea beneath modern data eng (36) and distributed training (07b) | Before processing a corpus that doesn't fit one machine |
+| 37 | [ML Foundations — the Folk Wisdom](10_classic_ml/37_ml_foundations_the_folk_wisdom.ipynb) (Domingos 2012) | 🔴 | Generalization, overfitting, bias/variance — the vocabulary every later eval notebook assumes | n/a |
+| 38 | [Optimization: Backprop Tricks → Adam](10_classic_ml/38_optimization_from_backprop_tricks_to_adam.ipynb) (LeCun 1998, Kingma & Ba 2014) | 🔴 | Adam is *the* LLM optimizer; its 2x-params state is what 07b's ZeRO shards | n/a |
+| 39 | [Trees, Forests & Boosting](10_classic_ml/39_trees_forests_and_boosting.ipynb) (Breiman 2001, XGBoost 2016) | 🔴 | Still the right tool for tabular data — knowing when NOT to use an LLM | n/a |
+| 40 | [The scikit-learn Way](10_classic_ml/40_the_sklearn_way.ipynb) (Pedregosa 2011) | 🟡 | Pipelines as leakage prevention — notebook 25's split discipline, enforced in code | Before your first sklearn project |
+| 41 | [Model Interpretability & SHAP](10_classic_ml/41_model_interpretability_shap.ipynb) (Lundberg & Lee 2017) | 🟡 | Principled attribution — and why attention weights aren't it | When someone asks "why did the model predict that?" |
+| 42 | [Spark & Distributed Data](10_classic_ml/42_spark_and_distributed_data.ipynb) (Zaharia 2010) | 🟢 | The in-memory-iteration idea beneath modern data eng (36) and distributed training (07b) | Before processing a corpus that doesn't fit one machine |
 
-*Two more papers from the same batch — Vaswani 2017 (Attention Is All You Need) and Devlin 2018 (BERT) — are transformer papers, covered by notebooks 04/05 and (planned addition) 05b respectively.*
+*Two more papers from the same batch — Vaswani 2017 (Attention Is All You Need) and Devlin 2018 (BERT) — are transformer papers, covered by notebooks 04/05 and 05b respectively (see their headers' Source-material lines).*
 
 ---
 
@@ -209,6 +214,8 @@ Use this table to decide a reading path. Full rationale for each label lives in 
 Short on time? These notebooks alone take you from zero to a working understanding of production agent systems — everything else adds depth or breadth on top:
 
 **04 → 05 → 12 → 13 → 13c → 14 → 16b → 18 → 19 → 19c → 21 → 22 → 23 → 24 → 26 → 27b → 28 → 28b → 30 → 30c → P4**
+
+**Coming from data science, not software?** Prepend Tier 10's 🔴 notebooks first — they're the ML substrate the rest of the fast path assumes: **37 → 38 → 39 →** *(then the chain above)*.
 
 ---
 
@@ -243,7 +250,7 @@ tools/setup_frameworks_venv.sh   # builds .venv-frameworks — optional, only fo
 
 Every other notebook runs with just `uv sync` / `pip install -r requirements.txt`.
 
-**Tiers 1–2 run fully offline** — no API key required. A few notebooks download small open models (GPT-2, DistilBERT, MiniLM) on first run; they cache locally and fall back gracefully if you're offline. **Tiers 3–9 and the projects use `ANTHROPIC_API_KEY`** (and optionally `OPENAI_API_KEY` for notebook 35's audio calls, `LANGSMITH_API_KEY` for tracing in notebooks 21–23, 27, P3/P4) — but every live cell is guarded, so concept and code cells still run without a key. Live teaching calls default to a small, cheap model (`claude-haiku-4-5`); swap to `claude-opus-4-8` for production.
+**Tiers 1–2 and 10 run fully offline** — no API key required. A few notebooks download small open models (GPT-2, DistilBERT, MiniLM) on first run; they cache locally and fall back gracefully if you're offline. **Tiers 3–9 and the projects use `ANTHROPIC_API_KEY`** (and optionally `OPENAI_API_KEY` for notebook 35's audio calls, `LANGSMITH_API_KEY` for tracing in notebooks 21–23, 27, P3/P4) — but every live cell is guarded, so concept and code cells still run without a key. Live teaching calls default to a small, cheap model (`claude-haiku-4-5`); swap to `claude-opus-4-8` for production.
 
 Launch:
 
@@ -259,6 +266,7 @@ uv run jupyter lab      # or: jupyter lab
 - **"I understand the basics, I want to build"** → skim Tier 1, then start at **12** (Prompt Engineering) and work through Tier 3.
 - **"I want to build production agent systems"** → start at **18** (What Is an Agent), work through Tier 4, then build the **P3** capstone. Introduces Claude SDK agents, LangGraph, and LangSmith.
 - **"I want to ship AI systems in production"** → start at **24** (LLM Evals Fundamentals), work through Tiers 5 and 8, then build the **P4** capstone. Covers evaluation, security, cost, CI, and the full production-hardening discipline most tutorials skip.
+- **"I'm coming from data science and want the ML fundamentals under the LLM stack"** → start at **37** (ML Foundations) and work through Tier 10, then continue into Tier 1. Covers the optimization, tree-ensemble, and evaluation-discipline substrate the rest of the curriculum assumes but never re-teaches.
 
 Every notebook lists its prerequisites AND a priority label in the header cell, so you always know what to read first and what's safe to defer.
 
