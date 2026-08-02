@@ -9,7 +9,7 @@ Tier 1  Foundations          how AI/LLMs actually work          (00–06)     �
 Tier 2  Training             how models are trained & aligned   (07–11)    ✅
 Tier 3  Building with LLMs   RAG, caching, inference             (12–17)   ✅
 Tier 4  Agent Engineering    systems that use LLMs              (18–23)    ✅
-Tier 5  Evaluation & Prod    measuring AI systems                (24–27b)  ✅
+Tier 5  Evaluation & Prod    measuring AI systems                (24–27c)  ✅
 Tier 6  Projects             capstones (train/RAG/agents)        (P1–P4)   ✅
 Tier 7  RAG Design Patterns  the original rag_learning series    (00–07)   ✅
 Tier 8  Production & Safety  serving, security, cost, CI         (28–33)   ✅
@@ -52,7 +52,7 @@ graph TD
     end
     subgraph T5["Tier 5 — Evaluation ✅"]
         N24[24 Evals Fundamentals 🔴] --> N24b[24b Retrieval & Citation Evals] --> N25[25 Benchmark Hygiene]
-        N25 --> N26[26 LLM-as-Judge 🔴] --> N27[27 Prod Monitoring] --> N27b[27b Agent Evals 🔴]
+        N25 --> N26[26 LLM-as-Judge 🔴] --> N27[27 Prod Monitoring] --> N27b[27b Agent Evals 🔴] --> N27c[27c Agent Eval Gates 🔴]
     end
     subgraph T8["Tier 8 — Production & Safety ✅"]
         N28[28 Structured Outputs 🔴] --> N28b[28b Tool Contracts & Reliability 🔴] --> N29[29 Serving LLM Apps]
@@ -77,7 +77,7 @@ graph TD
     N11 --> N12
     N17 --> N18
     N23 --> N24
-    N27b --> N28
+    N27c --> N28
     N33 --> N34
     N11 --> P1
     N27 --> P2
@@ -151,6 +151,7 @@ Use this table to decide a reading path. Full rationale for each label lives in 
 | 26 | [LLM-as-Judge](05_evaluation/26_llm_as_judge.ipynb) | 🔴 | Judges silently ratify garbage if uncalibrated — pairs directly with 24 | n/a |
 | 27 | [Production Monitoring](05_evaluation/27_production_monitoring.ipynb) | 🟡 | Observability tooling is learnable in days, often platform-team owned | The week before your first production deploy |
 | 27b | [Agent Evals](05_evaluation/27b_agent_evals.ipynb) | 🔴 | The rarest, most differentiating skill on the market right now | n/a |
+| 27c | [Agent Eval Gates](05_evaluation/27c_agent_eval_gates.ipynb) | 🔴 | A verdict that doesn't change what runs next is a report, not a gate — this wires scores into handoffs, branches, and merges | n/a |
 
 ### Tier 6 — Projects
 | # | Notebook | Priority | Why | Revisit if skipped |
@@ -213,7 +214,7 @@ Use this table to decide a reading path. Full rationale for each label lives in 
 
 Short on time? These notebooks alone take you from zero to a working understanding of production agent systems — everything else adds depth or breadth on top:
 
-**04 → 05 → 12 → 13 → 13c → 14 → 16b → 18 → 19 → 19c → 21 → 22 → 23 → 24 → 26 → 27b → 28 → 28b → 30 → 30c → P4**
+**04 → 05 → 12 → 13 → 13c → 14 → 16b → 18 → 19 → 19c → 21 → 22 → 23 → 24 → 26 → 27b → 27c → 28 → 28b → 30 → 30c → P4**
 
 **Coming from data science, not software?** Prepend Tier 10's 🔴 notebooks first — they're the ML substrate the rest of the fast path assumes: **37 → 38 → 39 →** *(then the chain above)*.
 

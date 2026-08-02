@@ -318,3 +318,18 @@ Agents," "Building agents with the Claude Agent SDK," "Effective context enginee
 Skills"** — plausible, all Anthropic-plausible titles, not independently re-verified against
 anthropic.com in this pass), this curriculum's Content Source Map currently cites these concepts only
 through third-party tweets, never Anthropic's own posts directly. Worth a follow-up check.
+
+---
+
+## Addendum, 2026-08-02: Agent Eval Gates
+
+A six-step agent eval-gate architecture (judge bias hygiene → verdicts wired into control flow →
+three-level grading → trace-mined evals → judge pinning/rubrics → blast-radius merge gate) was shared
+directly in conversation from an X (Twitter) thread. Web searches on several of the article's
+distinctive verbatim lines (e.g. "the score you are reading is partly about your judge," "a verdict
+that does not change the run is a report," "open the gate on blast radius, not on confidence") did not
+surface the original post — X is poorly indexed by web search and not fetchable unauthenticated, so
+the exact author/URL could not be recovered independently. It extends `05_evaluation/26_llm_as_judge`
+and `27b_agent_evals`, and feeds `08_production/33_ci_for_ai`; built as
+`05_evaluation/27c_agent_eval_gates.ipynb` + `agentkit/gates.py`. This is a standalone addition, not
+part of the 58-source snapshot audited above.
