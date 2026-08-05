@@ -40,7 +40,7 @@ graph TD
     end
     subgraph T2["Tier 2 — Training ✅"]
         N07[07 Pretraining & Scaling] --> N07b[07b Distributed Training] --> N08[08 Fine-tuning & LoRA]
-        N08 --> N09[09 RLHF & Alignment] --> N10[10 Quantization] --> N11[11 Speculative Decoding]
+        N08 --> N09[09 RLHF & Alignment] --> N09b[09b RL Loop & GRPO] --> N10[10 Quantization] --> N11[11 Speculative Decoding]
     end
     subgraph T3["Tier 3 — Building ✅"]
         N12[12 Prompt Eng 🔴] --> N13[13 Context & KV Cache 🔴] --> N13b[13b vLLM Serving] --> N13c[13c Inference Economics 🔴] --> N14[14 RAG 🔴]
@@ -111,6 +111,7 @@ Use this table to decide a reading path. Full rationale for each label lives in 
 | 07b | [Distributed Training](02_training/07b_distributed_training.ipynb) | 🟡 | P1 trains on one device and stops; real models are trained across many — DDP/ZeRO/FSDP/pipeline parallelism with real multi-process collectives | Before a model or optimizer state no longer fits on one device |
 | 08 | [Fine-tuning & LoRA](02_training/08_fine_tuning_and_lora.ipynb) | 🟡 | LoRA/QLoRA are common practical skills | Before your first fine-tuning task |
 | 09 | [RLHF & Alignment](02_training/09_rlhf_and_alignment.ipynb) | 🟢 | Valuable depth (DPO/PPO), usually a research-team concern day-to-day | Before an alignment-focused role/interview |
+| 09b | [The RL Loop & GRPO](02_training/09b_rl_loop_and_grpo.ipynb) | 🟡 | The substrate under GRPO/RLVR that notebook 09 skips — episodes, rollouts, advantage estimation, and why you bootstrap on truncation but not on termination | Before working on RL-based post-training, or an RL-flavoured infra role |
 | 10 | [Quantization](02_training/10_quantization.ipynb) | 🟢 | Matters specifically for self-hosting/edge deployment | Before deploying on constrained hardware |
 | 11 | [Speculative Decoding](02_training/11_speculative_decoding.ipynb) | 🟢 | Inference-optimization depth, usually owned by an infra team | Before an inference-serving role, or notebook 13b |
 
