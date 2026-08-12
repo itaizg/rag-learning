@@ -56,7 +56,7 @@ graph TD
     end
     subgraph T8["Tier 8 — Production & Safety ✅"]
         N28[28 Structured Outputs 🔴] --> N28b[28b Tool Contracts & Reliability 🔴] --> N29[29 Serving LLM Apps]
-        N29 --> N30[30 Security & Guardrails 🔴] --> N30b[30b Human-in-the-Loop] --> N30c[30c Capability Security 🔴] --> N30d[30d Multi-Tenant Isolation] --> N31[31 MCP] --> N32[32 Cost Eng] --> N32b[32b Content-Addressed Cache] --> N33[33 CI for AI]
+        N29 --> N30[30 Security & Guardrails 🔴] --> N30b[30b Human-in-the-Loop] --> N30c[30c Capability Security 🔴] --> N30d[30d Multi-Tenant Isolation] --> N31[31 MCP] --> N32[32 Cost Eng] --> N32b[32b Content-Addressed Cache] --> N33[33 CI for AI] --> N33b[33b Eval Gate Policy]
     end
     subgraph T9["Tier 9 — Frontier ✅"]
         N34[34 Computer Use] --> N35[35 Voice & Realtime]
@@ -78,7 +78,7 @@ graph TD
     N17 --> N18
     N23 --> N24
     N27c --> N28
-    N33 --> N34
+    N33b --> N34
     N11 --> P1
     N27 --> P2
     N23 --> P3
@@ -188,6 +188,7 @@ Use this table to decide a reading path. Full rationale for each label lives in 
 | 32 | [Cost Engineering](08_production/32_cost_engineering.ipynb) | 🟡 | Cost is what gets AI features killed in production | The first invoice that makes someone wince |
 | 32b | [Content-Addressed Caching](08_production/32b_content_addressed_caching.ipynb) | 🟢 | Hash-keyed result caching + Bloom-filter gate + leased verify-before-count workers — makes warm runs nearly free | When an agent recomputes identical parsing/embedding/analysis work |
 | 33 | [CI for AI](08_production/33_ci_for_ai.ipynb) | 🟡 | Turns notebook-24 skills into team-level leverage | When a second person edits your prompts |
+| 33b | [Eval Gate Policy](08_production/33b_eval_gate_policy.ipynb) | 🟡 | Makes 33's gate threshold defensible — variance calibration, dual thresholds, slice checks, staged CI, release evidence | When your gate starts flaking, or an aggregate score is hiding a broken segment |
 
 ### Tier 9 — Frontier & the Data-Engineer Edge (full detail in each header)
 | # | Notebook | Priority | Why | Revisit if skipped |

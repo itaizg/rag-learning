@@ -333,3 +333,26 @@ the exact author/URL could not be recovered independently. It extends `05_evalua
 and `27b_agent_evals`, and feeds `08_production/33_ci_for_ai`; built as
 `05_evaluation/27c_agent_eval_gates.ipynb` + `agentkit/gates.py`. This is a standalone addition, not
 part of the 58-source snapshot audited above.
+
+---
+
+## Addendum, 2026-08-12: CI/CD Eval Gate Policy
+
+Two URLs were supplied directly in conversation:
+
+| Source | Verdict | Coverage before this build | Notebook(s) |
+|---|:---:|---|-------------|
+| Confident AI, ["Best AI Evaluation Tools for CI/CD"](https://www.confident-ai.com/knowledge-base/compare/best-ai-evaluation-tools-for-ci-cd) | ❌ Missing | `08_production/33_ci_for_ai`'s `regression_gate` was a single-sample, zero-tolerance comparison — no variance calibration, no absolute floor, no slice check. The article's dual-threshold and variance-first design was genuinely absent. | `08_production/33b_eval_gate_policy.ipynb` |
+| CircleCI, ["CI/CD Testing Strategies for Generative AI Apps"](https://circleci.com/blog/ci-cd-testing-strategies-for-generative-ai-apps/) | 🟨 Partial | 5 of its 6 strategy families were already covered (hallucination/faithfulness in 26 & 27c, bias in 26, drift in 27, latency in 13c/29, adversarial in 30) — its own contribution is the failure-mode-to-check framing, not new mechanics. Contains no code. | `08_production/33b_eval_gate_policy.ipynb` §A (orientation only) |
+
+**Caveat carried into the notebook:** the Confident AI piece is a vendor comparison that ranks its
+own product first among 9 tools (Confident AI, Noveum, Promptfoo, MLflow 3, Arize Phoenix, LangSmith,
+Braintrust, Ragas, LangWatch). The gate-policy mechanics (variance calibration, dual thresholds,
+min-pass-of-n, slice checks, staged coverage, versioned release evidence) are sound and were built as
+real, executable code; the 9-tool ranking itself is treated as marketing and presented with an
+explicit skepticism note in the notebook's tool-landscape section rather than restated as fact.
+
+Built as `08_production/33b_eval_gate_policy.ipynb` (🟡) + `agentkit/evalgate.py`, hardening
+`33_ci_for_ai.ipynb`'s gate and feeding `05_evaluation/27c_agent_eval_gates.ipynb`'s `MergeGate` via a
+new `gate_evidence()` conversion. This is a standalone addition, not part of the 58-source snapshot
+audited above.

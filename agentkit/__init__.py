@@ -24,6 +24,20 @@ from agentkit.gates import (
     judge_verdict,
     verdict_to_action,
 )
+from agentkit.evalgate import (
+    DEFAULT_STAGES,
+    GateOutcome,
+    ReleaseEvidence,
+    StagePolicy,
+    ThresholdPolicy,
+    VarianceProfile,
+    dataset_hash,
+    evaluate_candidate,
+    gate_evidence,
+    measure_variance,
+    select_cases,
+    slice_means,
+)
 
 __all__ = [
     "ToolContract",
@@ -51,4 +65,16 @@ __all__ = [
     "cross_family_warnings",
     "judge_verdict",
     "verdict_to_action",
+    "DEFAULT_STAGES",
+    "GateOutcome",
+    "ReleaseEvidence",
+    "StagePolicy",
+    "ThresholdPolicy",
+    "VarianceProfile",
+    "dataset_hash",
+    "evaluate_candidate",
+    "gate_evidence",
+    "measure_variance",
+    "select_cases",
+    "slice_means",
 ]
